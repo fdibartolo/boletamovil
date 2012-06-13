@@ -15,7 +15,6 @@ namespace prode
 	{
 		// class-level declarations
 		UIWindow window;
-		UITabBarController tabBarController;
 
 		//
 		// This method is invoked when the application has loaded and is ready to run. In this 

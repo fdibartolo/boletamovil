@@ -8,9 +8,9 @@ namespace prode
 {
 	public partial class LoginViewController : UIViewController
 	{
-		public LoginViewController () : base ("LoginViewController", null)
-		{
-		}
+		UITabBarController tabBarController;
+
+		public LoginViewController () : base ("LoginViewController", null) {}
 		
 		public override void DidReceiveMemoryWarning ()
 		{
@@ -23,18 +23,14 @@ namespace prode
 		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
-			
 			// Perform any additional setup after loading the view, typically from a nib.
 		}
 		
 		public override void ViewDidUnload ()
 		{
 			base.ViewDidUnload ();
-			
-			// Clear any references to subviews of the main view in order to
-			// allow the Garbage Collector to collect them sooner.
-			//
-			// e.g. myOutlet.Dispose (); myOutlet = null;
+			txtUsername.Dispose();
+			//txtPassword.Dispose();
 			
 			ReleaseDesignerOutlets ();
 		}
@@ -58,8 +54,11 @@ namespace prode
 					userViewController
 				};
 
-				
+				var navigationController = new UINavigationController(tabBarController);
+				this.PresentModalViewController(navigationController, true);
 			}
+			else
+				new UIAlertView("ComunidadProde", "El usuario o contrasena son incorrectos", null, "Ok").Show();
 		}
 	}
 }
