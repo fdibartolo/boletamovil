@@ -1,0 +1,7 @@
+# Ignore assemblies
+/**/bin/**/**/*.*
+/**/obj/**/
+
+*.userprefs
+*.pidb
+.DS_Store
