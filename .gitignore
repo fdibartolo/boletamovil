@@ -1,6 +1,7 @@
 # Ignore assemblies
 /**/bin/**/**/*.*
 /**/obj/**/
+prode.domain/bin/**/*.*
 
 *.userprefs
 *.pidb

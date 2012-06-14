@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "prode", "prode\prode.csproj", "{9DCC462E-78EC-4355-B5FC-C1A40C5D90E1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "prode.domain", "prode.domain\prode.domain.csproj", "{19DB8273-02C5-4131-B591-5D30135977AB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|iPhoneSimulator = Debug|iPhoneSimulator
@@ -13,6 +15,18 @@ Global
 		AppStore|iPhone = AppStore|iPhone
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{19DB8273-02C5-4131-B591-5D30135977AB}.Ad-Hoc|iPhone.ActiveCfg = Debug|Any CPU
+		{19DB8273-02C5-4131-B591-5D30135977AB}.Ad-Hoc|iPhone.Build.0 = Debug|Any CPU
+		{19DB8273-02C5-4131-B591-5D30135977AB}.AppStore|iPhone.ActiveCfg = Debug|Any CPU
+		{19DB8273-02C5-4131-B591-5D30135977AB}.AppStore|iPhone.Build.0 = Debug|Any CPU
+		{19DB8273-02C5-4131-B591-5D30135977AB}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{19DB8273-02C5-4131-B591-5D30135977AB}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{19DB8273-02C5-4131-B591-5D30135977AB}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{19DB8273-02C5-4131-B591-5D30135977AB}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{19DB8273-02C5-4131-B591-5D30135977AB}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{19DB8273-02C5-4131-B591-5D30135977AB}.Release|iPhone.Build.0 = Release|Any CPU
+		{19DB8273-02C5-4131-B591-5D30135977AB}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{19DB8273-02C5-4131-B591-5D30135977AB}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 		{9DCC462E-78EC-4355-B5FC-C1A40C5D90E1}.Ad-Hoc|iPhone.ActiveCfg = Ad-Hoc|iPhone
 		{9DCC462E-78EC-4355-B5FC-C1A40C5D90E1}.Ad-Hoc|iPhone.Build.0 = Ad-Hoc|iPhone
 		{9DCC462E-78EC-4355-B5FC-C1A40C5D90E1}.AppStore|iPhone.ActiveCfg = AppStore|iPhone

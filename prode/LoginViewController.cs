@@ -1,16 +1,19 @@
 using System;
 using System.Drawing;
-
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
+using prode.domain;
 
 namespace prode
 {
 	public partial class LoginViewController : UIViewController
 	{
 		UITabBarController tabBarController;
+		ILoginService loginService;
 
-		public LoginViewController () : base ("LoginViewController", null) {}
+		public LoginViewController () : base ("LoginViewController", null) {
+			loginService = new LoginService();
+		}
 		
 		public override void DidReceiveMemoryWarning ()
 		{
@@ -31,6 +34,7 @@ namespace prode
 			base.ViewDidUnload ();
 			txtUsername.Dispose();
 			//txtPassword.Dispose();
+			loginService = null;
 			
 			ReleaseDesignerOutlets ();
 		}
@@ -43,7 +47,7 @@ namespace prode
 		
 		partial void Login (MonoTouch.UIKit.UIButton sender)
 		{
-			if (txtUsername.Text == "fer") {
+			if (loginService.Login(txtUsername.Text, "fer")) {
 				var communityViewController = new CommunityViewController ();
 				var cardsViewController = new CardsViewController ();
 				var userViewController = new UserViewController();
