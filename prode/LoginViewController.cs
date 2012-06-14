@@ -33,7 +33,7 @@ namespace prode
 		{
 			base.ViewDidUnload ();
 			txtUsername.Dispose();
-			//txtPassword.Dispose();
+			txtPassword.Dispose();
 			loginService = null;
 			
 			ReleaseDesignerOutlets ();

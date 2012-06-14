@@ -14,6 +14,9 @@ namespace prode
 		[Outlet]
 		MonoTouch.UIKit.UITextField txtUsername { get; set; }
 
+		[Outlet]
+		MonoTouch.UIKit.UITextField txtPassword { get; set; }
+
 		[Action ("Login:")]
 		partial void Login (MonoTouch.UIKit.UIButton sender);
 		
@@ -22,6 +25,11 @@ namespace prode
 			if (txtUsername != null) {
 				txtUsername.Dispose ();
 				txtUsername = null;
+			}
+
+			if (txtPassword != null) {
+				txtPassword.Dispose ();
+				txtPassword = null;
 			}
 		}
 	}
