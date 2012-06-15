@@ -10,7 +10,7 @@ namespace prode
 	{
 		public UserViewController () : base ("UserViewController", null)
 		{
-			Title = NSBundle.MainBundle.LocalizedString ("MiCuenta", "Mi Cuenta");
+			Title = NSBundle.MainBundle.LocalizedString ("Mi Cuenta", "MiCuenta");
 			TabBarItem.Image = UIImage.FromBundle ("Images/first");
 		}
 		

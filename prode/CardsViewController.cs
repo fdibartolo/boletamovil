@@ -10,7 +10,7 @@ namespace prode
 	{
 		public CardsViewController () : base ("CardsViewController", null)
 		{
-			Title = NSBundle.MainBundle.LocalizedString ("MisTarjetas", "Mis Tarjetas");
+			Title = NSBundle.MainBundle.LocalizedString ("Mis Tarjetas", "MisTarjetas");
 			TabBarItem.Image = UIImage.FromBundle ("Images/second");
 		}
 		

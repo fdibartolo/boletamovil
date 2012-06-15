@@ -47,7 +47,7 @@ namespace prode
 		
 		partial void Login (MonoTouch.UIKit.UIButton sender)
 		{
-			if (loginService.Login(txtUsername.Text, "fer")) {
+			if (loginService.Login(txtUsername.Text, txtPassword.Text)) {
 				var communityViewController = new CommunityViewController ();
 				var cardsViewController = new CardsViewController ();
 				var userViewController = new UserViewController();
@@ -58,6 +58,7 @@ namespace prode
 					userViewController
 				};
 
+				tabBarController.SetTitle("Comunidad Prode");
 				var navigationController = new UINavigationController(tabBarController);
 				this.PresentModalViewController(navigationController, true);
 			}
