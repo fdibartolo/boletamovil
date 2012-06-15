@@ -41,6 +41,8 @@
     <Folder Include="Services\" />
     <Folder Include="Proxy\" />
     <Folder Include="Model\" />
+    <Folder Include="Store\" />
+    <Folder Include="Util\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Services\ILoginService.cs" />
@@ -49,5 +51,9 @@
     <Compile Include="Proxy\WebClientProxy.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Model\User.cs" />
+    <Compile Include="AppManager.cs" />
+    <Compile Include="Repository.cs" />
+    <Compile Include="Store\UserStore.cs" />
+    <Compile Include="Util\EncryptionManager.cs" />
   </ItemGroup>
 </Project>

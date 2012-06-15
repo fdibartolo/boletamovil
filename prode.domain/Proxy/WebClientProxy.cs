@@ -13,11 +13,8 @@ namespace prode.domain
 		
 		public string HttpGet(string url) {
 			
-			//JsonObject obj;
-			//obj.
-			//JsonValue.Parse(
-			
 			/// try!!! 401!!
+
 			Uri uri = new Uri(url);
 			byte[] bytes = _webClient.DownloadData(uri);
 			return Encoding.UTF8.GetString(bytes);

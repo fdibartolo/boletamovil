@@ -47,23 +47,12 @@ namespace prode
 		
 		partial void Login (MonoTouch.UIKit.UIButton sender)
 		{
-			if (loginService.Login(txtUsername.Text, txtPassword.Text)) {
-				var communityViewController = new CommunityViewController ();
-				var cardsViewController = new CardsViewController ();
-				var userViewController = new UserViewController();
-				tabBarController = new UITabBarController ();
-				tabBarController.ViewControllers = new UIViewController [] {
-					communityViewController,
-					cardsViewController,
-					userViewController
-				};
-
-				tabBarController.SetTitle("Comunidad Prode");
-				var navigationController = new UINavigationController(tabBarController);
-				this.PresentModalViewController(navigationController, true);
+			if ((string.IsNullOrEmpty(txtUsername.Text)) || (string.IsNullOrEmpty(txtPassword.Text))) {
+				new UIAlertView("Comunidad Prode", "Tanto el usuario como la contraseña deben ser provistos", null, "Ok").Show();
+				return;
 			}
-			else
-				new UIAlertView("ComunidadProde", "El usuario o contrasena son incorrectos", null, "Ok").Show();
+			
+			AppManager.Current.Login(txtUsername.Text, txtPassword.Text);
 		}
 	}
 }

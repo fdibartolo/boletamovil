@@ -103,6 +103,8 @@
       <DependentUpon>UserViewController.cs</DependentUpon>
     </Compile>
     <Compile Include="Extensions\TabBarControllerExtension.cs" />
+    <Compile Include="Util\Reachability.cs" />
+    <Compile Include="Util\LoadingHUDView.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="LoginViewController.xib" />
@@ -125,5 +127,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Extensions\" />
+    <Folder Include="Util\" />
   </ItemGroup>
 </Project>
