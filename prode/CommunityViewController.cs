@@ -11,7 +11,7 @@ namespace prode
 		public CommunityViewController () : base ("CommunityViewController", null)
 		{
 			Title = NSBundle.MainBundle.LocalizedString ("Comunidad", "Comunidad");
-			TabBarItem.Image = UIImage.FromBundle ("Images/first");
+			TabBarItem.Image = UIImage.FromFile("Images/Community.png");
 		}
 		
 		public override void DidReceiveMemoryWarning ()

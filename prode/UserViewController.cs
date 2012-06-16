@@ -1,6 +1,6 @@
 using System;
 using System.Drawing;
-
+using prode.domain;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 
@@ -11,7 +11,7 @@ namespace prode
 		public UserViewController () : base ("UserViewController", null)
 		{
 			Title = NSBundle.MainBundle.LocalizedString ("Mi Cuenta", "MiCuenta");
-			TabBarItem.Image = UIImage.FromBundle ("Images/first");
+			TabBarItem.Image = UIImage.FromFile("Images/User.png");
 		}
 		
 		public override void DidReceiveMemoryWarning ()
@@ -27,7 +27,13 @@ namespace prode
 			base.ViewDidLoad ();
 			View.BackgroundColor = UIColor.FromPatternImage(UIImage.FromFile("Default.png"));
 			
-			// Perform any additional setup after loading the view, typically from a nib.
+			var button = UIButton.FromType(UIButtonType.RoundedRect);
+			button.Frame = new RectangleF(10, 260, 300, 40);
+			button.SetTitle("Cerrar Sesion", UIControlState.Normal);
+			button.TouchUpInside += delegate(object sender, EventArgs e) {
+				AppManager.Current.Logout();
+			};
+			View.AddSubview(button);
 		}
 		
 		public override void ViewDidUnload ()

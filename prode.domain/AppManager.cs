@@ -86,6 +86,14 @@ namespace prode.domain
 			OnNetworkUsageEnded();
 			_uiClient.ApplicationStartUpMode(mode);
 		}
+
+		public void Logout ()
+		{
+			var user = new User();
+			Repository.User = user;
+			UserStore.SaveUser(user);
+			_uiClient.ApplicationStartUpMode(AppMode.Login);
+		}		
 		
 		public void OnNetworkUsageStarted(){
 			_uiClient.NetworkUsageStarted(true, "Conectando");

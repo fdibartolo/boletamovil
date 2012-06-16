@@ -118,11 +118,10 @@
     <InterfaceDefinition Include="UserViewController.xib" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Images\first.png" />
-    <Content Include="Images\first%402x.png" />
-    <Content Include="Images\second.png" />
-    <Content Include="Images\second%402x.png" />
     <Content Include="Default.png" />
+    <Content Include="Images\Cards.png" />
+    <Content Include="Images\Community.png" />
+    <Content Include="Images\User.png" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
