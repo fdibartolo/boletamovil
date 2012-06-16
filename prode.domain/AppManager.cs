@@ -45,31 +45,27 @@ namespace prode.domain
 		public void StartUp(){
 			Console.WriteLine("Starting up...");
 
-			if (!ConfirmNetworkIsAvailable())
-				return;
-			
-			OnNetworkUsageStarted("Ingresando");
-
 			var user = UserStore.ReadUser();
-			if ((user != null) && (user.IsValid())) {
-				LoginService.OnLoginCompleted += _LoginCompleted;
-				LoginService.LoginAsync(user.NickName, user.Password);
-			}
-			else {
-				OnNetworkUsageEnded();
+			if ((user != null) && (user.IsValid()))
+				Login(user.NickName, user.Password);
+			else 
 				_uiClient.ApplicationStartUpMode(AppMode.Login);
-			}
 		}	
-		
+
 		public void Login(string nickname, string password){
 			if (!ConfirmNetworkIsAvailable())
 				return;
-
-			OnNetworkUsageStarted("Ingresando");
-			LoginService.OnLoginCompleted += _LoginCompleted;
-			LoginService.LoginAsync(nickname, password);
+			
+			LoginService.SetCredentials(nickname, password);
+			new Thread(new ThreadStart(_LoginAsync)).Start();
 		}
-		
+
+		private	void _LoginAsync() {
+			OnNetworkUsageStarted ("Ingresando");
+			LoginService.OnLoginCompleted += _LoginCompleted;
+			LoginService.LoginAsync();
+		}		
+
 		private void _LoginCompleted(bool hasErrors, User user) {
 			AppMode mode;
 			if (hasErrors) {

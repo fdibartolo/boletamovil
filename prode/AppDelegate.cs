@@ -36,15 +36,10 @@ namespace prode
 			window = new UIWindow (UIScreen.MainScreen.Bounds);
 			window.AddSubview(new UIImageView(UIImage.FromFile("Default.png")));
 
-			new Thread(new ThreadStart(_StartUp)).Start();
-			
+			AppManager.Current.StartUp();
 			window.MakeKeyAndVisible ();
 			
 			return true;
-		}
-		
-		private void _StartUp() {
-			AppManager.Current.StartUp();
 		}
 		
 		private void _InitializeControllers() {
