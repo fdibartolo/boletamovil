@@ -8,12 +8,7 @@ namespace prode
 {
 	public partial class LoginViewController : UIViewController
 	{
-		UITabBarController tabBarController;
-		ILoginService loginService;
-
-		public LoginViewController () : base ("LoginViewController", null) {
-			loginService = new LoginService();
-		}
+		public LoginViewController () : base ("LoginViewController", null) {}
 		
 		public override void DidReceiveMemoryWarning ()
 		{
@@ -34,7 +29,6 @@ namespace prode
 			base.ViewDidUnload ();
 			txtUsername.Dispose();
 			txtPassword.Dispose();
-			loginService = null;
 			
 			ReleaseDesignerOutlets ();
 		}

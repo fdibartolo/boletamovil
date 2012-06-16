@@ -7,7 +7,7 @@ namespace prode.domain
 {
 	public interface UIClient {
 		bool IsNetworkAvailable();
-		void NetworkUsageStarted(bool blockUser);
+		void NetworkUsageStarted(bool blockUser, string title);
 		void NetworkUsageEnded();
 		void ShowMessage(string title, string message);
 		void ApplicationStartUpMode(AppMode mode);
@@ -21,7 +21,7 @@ namespace prode.domain
 	public class AppManager {
 		
 		private UIClient _uiClient;
-		public ILoginService LoginService { get; set; }
+		public LoginService LoginService { get; set; }
 		public UserStore UserStore { get; set; }
 		public Repository Repository { get; set; }
 		
@@ -43,55 +43,60 @@ namespace prode.domain
 		}
 
 		public void StartUp(){
+			Console.WriteLine("Starting up...");
+
 			if (!ConfirmNetworkIsAvailable())
 				return;
 			
-			OnNetworkUsageStarted(true);
+			OnNetworkUsageStarted("Ingresando");
 
-			Console.WriteLine("Starting up...");
-			
-			AppMode startUpMode;
 			var user = UserStore.ReadUser();
-			if ((user != null) && (user.IsValid()) && (LoginService.Login(user.NickName, user.Password))){
-				_current.Repository.User = user.Sanitize(); //so we dont keep pwd in memory
-				startUpMode = AppMode.Tabs;
-				Console.WriteLine("StartedUp in tab mode");
+			if ((user != null) && (user.IsValid())) {
+				LoginService.OnLoginCompleted += _LoginCompleted;
+				LoginService.LoginAsync(user.NickName, user.Password);
 			}
-			else
-				startUpMode = AppMode.Login;
-			
-			OnNetworkUsageEnded();
-			_uiClient.ApplicationStartUpMode(startUpMode);
+			else {
+				OnNetworkUsageEnded();
+				_uiClient.ApplicationStartUpMode(AppMode.Login);
+			}
 		}	
 		
 		public void Login(string nickname, string password){
 			if (!ConfirmNetworkIsAvailable())
 				return;
 
-			OnNetworkUsageStarted(true);
-			
-			AppMode startUpMode;
-			if (LoginService.Login(nickname, password)){
-				UserStore.SaveUser(LoginService.LoggedInUser);
-				Repository.User = LoginService.LoggedInUser.Sanitize(); //so we dont keep pwd in memory
-				startUpMode = AppMode.Tabs;
-				Console.WriteLine("Redirecting to Tab mode");
+			OnNetworkUsageStarted("Ingresando");
+			LoginService.OnLoginCompleted += _LoginCompleted;
+			LoginService.LoginAsync(nickname, password);
+		}
+		
+		private void _LoginCompleted(bool hasErrors, User user) {
+			AppMode mode;
+			if (hasErrors) {
+				//TODO: show error msg
+				mode = AppMode.Login;
 			}
 			else {
-				startUpMode = AppMode.Login;
-				Console.WriteLine("Back to login form");
+				Console.WriteLine("Login success!");
+				UserStore.SaveUser(user);
+				Repository.User = user.Sanitize(); //so we dont keep pwd in memory
+				mode = AppMode.Tabs;
 			}
 			
 			OnNetworkUsageEnded();
-			_uiClient.ApplicationStartUpMode(startUpMode);
+			_uiClient.ApplicationStartUpMode(mode);
 		}
 		
 		public void OnNetworkUsageStarted(){
-			_uiClient.NetworkUsageStarted(true);
+			_uiClient.NetworkUsageStarted(true, "Conectando");
 		}
 		
-		public void OnNetworkUsageStarted(bool blockUser){
-			_uiClient.NetworkUsageStarted(blockUser);
+		public void OnNetworkUsageStarted(string title){
+			_uiClient.NetworkUsageStarted(true, title);
+		}
+		
+		public void OnNetworkUsageStarted(bool blockUser, string title){
+			_uiClient.NetworkUsageStarted(blockUser, title);
 		}
 		
 		public void OnNetworkUsageEnded(){

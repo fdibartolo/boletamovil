@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 using prode.domain;
+using System.Threading;
 
 namespace prode
 {
@@ -14,13 +14,12 @@ namespace prode
 	[Register ("AppDelegate")]
 	public partial class AppDelegate : UIApplicationDelegate, UIClient
 	{
-		// class-level declarations
 		UIWindow window;
 		private LoadingHUDView _loadingView;
-		private UIViewController LoginViewController;
-		private UIViewController CommunityViewController;
-		private UIViewController CardsViewController;
-		private UIViewController UserViewController;
+		private UIViewController _loginViewController;
+		private UIViewController _communityViewController;
+		private UIViewController _cardsViewController;
+		private UIViewController _userViewController;
 
 		//
 		// This method is invoked when the application has loaded and is ready to run. In this 
@@ -35,26 +34,31 @@ namespace prode
 			_InitializeControllers();
 			
 			window = new UIWindow (UIScreen.MainScreen.Bounds);
-						
-			//window.RootViewController = new LoginViewController();
-			AppManager.Current.StartUp();
+			window.AddSubview(new UIImageView(UIImage.FromFile("Default.png")));
+
+			new Thread(new ThreadStart(_StartUp)).Start();
+			
 			window.MakeKeyAndVisible ();
 			
 			return true;
 		}
 		
-		private void _InitializeControllers() {
-			LoginViewController = new LoginViewController();
-			CommunityViewController = new CommunityViewController();
-			CardsViewController = new CardsViewController();
-			UserViewController = new UserViewController();
+		private void _StartUp() {
+			AppManager.Current.StartUp();
 		}
 		
-		public bool IsNetworkAvailable () {
+		private void _InitializeControllers() {
+			_loginViewController = new LoginViewController();
+			_communityViewController = new CommunityViewController();
+			_cardsViewController = new CardsViewController();
+			_userViewController = new UserViewController();
+		}
+		
+		public bool IsNetworkAvailable() {
 			return Reachability.IsRemoteHostReachable();
 		}
 
-		public void NetworkUsageStarted (bool blockUser)
+		public void NetworkUsageStarted(bool blockUser, string title)
 		{
 			UIApplication.SharedApplication.NetworkActivityIndicatorVisible = true;
 			if (!blockUser)
@@ -63,6 +67,7 @@ namespace prode
 			InvokeOnMainThread(()=>{
 				if (_loadingView==null)
 					_loadingView = new LoadingHUDView();
+				_loadingView.Title = title;
 				UIApplication.SharedApplication.Windows.Last().AddSubview(_loadingView);	
 				_loadingView.StartAnimating();
 			});
@@ -90,11 +95,10 @@ namespace prode
 			switch (mode) {
 				case AppMode.Login:
 					Console.WriteLine("Launching login mode...");
-					LoginViewController.View.Frame = new System.Drawing.RectangleF(0,20,320,460);
+					_loginViewController.View.Frame = new System.Drawing.RectangleF(0,20,320,460);
 					InvokeOnMainThread(()=>{
-						window.BackgroundColor = UIColor.White;
 						_RemoveAllSubviews();
-						window.AddSubview(LoginViewController.View);
+						window.AddSubview(_loginViewController.View);
 					});
 					break;
 				
@@ -102,12 +106,11 @@ namespace prode
 					Console.WriteLine("Launching tabs mode...");
 					var tabBarController = new UITabBarController();
 					tabBarController.ViewControllers = new UIViewController [] {
-						CommunityViewController,
-						CardsViewController,
-						UserViewController
+						_communityViewController,
+						_cardsViewController,
+						_userViewController
 					};
 					InvokeOnMainThread(()=>{
-						window.BackgroundColor = UIColor.White;
 						_RemoveAllSubviews();
 						window.RootViewController = tabBarController;
 					});

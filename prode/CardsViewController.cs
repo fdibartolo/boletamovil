@@ -2,8 +2,6 @@ using System;
 using System.Drawing;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
-//using System.Net;
-//using System.Text;
 
 namespace prode
 {
@@ -26,7 +24,8 @@ namespace prode
 		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
-			
+			View.BackgroundColor = UIColor.FromPatternImage(UIImage.FromFile("Default.png"));
+
 //			var button = UIButton.FromType(UIButtonType.RoundedRect);
 //			button.Frame = new RectangleF(10, 260, 300, 40);
 //			button.SetTitle("Tarjetas", UIControlState.Normal);

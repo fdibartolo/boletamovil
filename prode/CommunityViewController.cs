@@ -25,7 +25,8 @@ namespace prode
 		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
-			
+			View.BackgroundColor = UIColor.FromPatternImage(UIImage.FromFile("Default.png"));
+
 			// Perform any additional setup after loading the view, typically from a nib.
 		}
 		
