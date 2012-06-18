@@ -54,5 +54,7 @@
     <Compile Include="Repository.cs" />
     <Compile Include="Store\UserStore.cs" />
     <Compile Include="Util\EncryptionManager.cs" />
+    <Compile Include="Services\CardsService.cs" />
+    <Compile Include="Services\BaseAbstractService.cs" />
   </ItemGroup>
 </Project>

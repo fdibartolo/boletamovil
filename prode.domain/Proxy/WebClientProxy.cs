@@ -2,40 +2,42 @@ using System;
 using System.Json;
 using System.Net;
 using System.Text;
+using System.Collections.Generic;
 
 namespace prode.domain
 {
+	public delegate void HttpGetCompleted(List<string> errors, string result);
+
 	public class WebClientProxy
 	{
 		private WebClient _webClient;
-		
-		public WebClientProxy() { 
-			_webClient = new WebClient();
-			//_webClient.DownloadDataCompleted += _HandleDownloadDataCompleted;
-		}
+		public HttpGetCompleted OnHttpGetCompleted;
+
+		public WebClientProxy() { _webClient = new WebClient(); }
 
 		public string HttpGet(string url) {
 			Uri uri = new Uri(url);
 			byte[] bytes = _webClient.DownloadData(uri);
 			return Encoding.UTF8.GetString(bytes);
 		}
+		
+		public void HttpGetAsync(string url) {
+			Uri uri = new Uri(url);
+			_webClient.DownloadDataCompleted += _HandleDownloadDataCompleted;
+			_webClient.DownloadDataAsync(uri);
+		}
 
-//		public void HttpGetAsync(string url) {
-//			
-//			/// try!!! 401!!
-//
-//			Uri uri = new Uri(url);
-//			_webClient.DownloadDataAsync(uri);
-//		}
-//		
-//		private void _HandleDownloadDataCompleted (object sender, DownloadDataCompletedEventArgs e)
-//		{
-//			//if error sarasa
-//			byte[] result = e.Result;
-//			return Encoding.UTF8.GetString(result);
-//		}
-//		
-
+		void _HandleDownloadDataCompleted (object sender, DownloadDataCompletedEventArgs e)
+		{
+			if (e.Error != null) {
+				if (e.Error.Message.Contains("401"))
+					OnHttpGetCompleted(new List<string> { "El usuario o la contraseña son incorrectas" }, null);
+				else
+					OnHttpGetCompleted(new List<string> { e.Error.Message }, null);
+			}
+			else 
+				OnHttpGetCompleted(null, Encoding.UTF8.GetString(e.Result));
+		}
 	}
 }
 

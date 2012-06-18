@@ -66,10 +66,10 @@ namespace prode.domain
 			LoginService.LoginAsync();
 		}		
 
-		private void _LoginCompleted(bool hasErrors, User user) {
+		private void _LoginCompleted(List<string> errors, User user) {
 			AppMode mode;
-			if (hasErrors) {
-				//TODO: show error msg
+			if (errors != null) {
+				ShowMessage("Comunidad Prode", errors[0]);
 				mode = AppMode.Login;
 			}
 			else {

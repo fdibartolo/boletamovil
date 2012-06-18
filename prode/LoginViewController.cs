@@ -33,6 +33,12 @@ namespace prode
 			ReleaseDesignerOutlets ();
 		}
 		
+		public override void ViewWillAppear (bool animated)
+		{
+			base.ViewWillAppear (animated);
+			txtPassword.Text = string.Empty;
+		}
+		
 		public override bool ShouldAutorotateToInterfaceOrientation (UIInterfaceOrientation toInterfaceOrientation)
 		{
 			// Return true for supported orientations

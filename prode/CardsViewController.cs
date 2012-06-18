@@ -25,19 +25,6 @@ namespace prode
 		{
 			base.ViewDidLoad ();
 			View.BackgroundColor = UIColor.FromPatternImage(UIImage.FromFile("Default.png"));
-
-//			var button = UIButton.FromType(UIButtonType.RoundedRect);
-//			button.Frame = new RectangleF(10, 260, 300, 40);
-//			button.SetTitle("Tarjetas", UIControlState.Normal);
-//			button.TouchUpInside += delegate(object sender, EventArgs e) {
-//				WebClient wc = new WebClient();
-//            	Uri uri = new Uri("https://fdibartolo:fdibartolo@stormy-autumn-8027.herokuapp.com/api/cards");
-//            	byte[] bytes = wc.DownloadData(uri);
-//            	string result = Encoding.UTF8.GetString(bytes);
-//				new UIAlertView("Title", result, null, "Ok").Show();
-//			};
-//			View.AddSubview(button);
-
 		}
 		
 		public override void ViewDidUnload ()
