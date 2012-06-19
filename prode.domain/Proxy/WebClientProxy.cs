@@ -1,34 +1,29 @@
 using System;
 using System.Json;
 using System.Net;
-using System.Text;
 using System.Collections.Generic;
 using prode.domain.constants;
 
 namespace prode.domain
 {
 	public delegate void HttpGetCompleted(List<string> errors, string result);
+	public delegate void HttpPostCompleted(List<string> errors);
 
 	public class WebClientProxy
 	{
 		private WebClient _webClient;
 		public HttpGetCompleted OnHttpGetCompleted;
-
+		public HttpPostCompleted OnHttpPostCompleted;
+		
 		public WebClientProxy() { _webClient = new WebClient(); }
 
-		public string HttpGet(string url) {
-			Uri uri = new Uri(url);
-			byte[] bytes = _webClient.DownloadData(uri);
-			return Encoding.UTF8.GetString(bytes);
-		}
-		
 		public void HttpGetAsync(string url) {
 			Uri uri = new Uri(url);
-			_webClient.DownloadDataCompleted += _HandleDownloadDataCompleted;
-			_webClient.DownloadDataAsync(uri);
+			_webClient.DownloadStringCompleted += _HandleDownloadStringCompleted;
+			_webClient.DownloadStringAsync(uri);
 		}
 
-		void _HandleDownloadDataCompleted (object sender, DownloadDataCompletedEventArgs e)
+		void _HandleDownloadStringCompleted (object sender, DownloadStringCompletedEventArgs e)
 		{
 			if (e.Error != null) {
 				if (e.Error.Message.Contains("401"))
@@ -37,7 +32,25 @@ namespace prode.domain
 					OnHttpGetCompleted(new List<string> { e.Error.Message }, null);
 			}
 			else 
-				OnHttpGetCompleted(null, Encoding.UTF8.GetString(e.Result));
+				OnHttpGetCompleted(null, e.Result);
+		}
+		
+		public void HttpPostAsync(string url, string data) {
+			Uri uri = new Uri(url);
+			_webClient.UploadStringCompleted += _HandleUploadStringCompleted;
+			_webClient.Headers.Add(HttpRequestHeader.ContentType, "application/json");
+			_webClient.UploadStringAsync(uri, "POST", data);
+		}
+
+		void _HandleUploadStringCompleted(object sender, UploadStringCompletedEventArgs e) {
+			if (e.Error != null) {
+				if (e.Error.Message.Contains("401"))
+					OnHttpPostCompleted(new List<string> { Constants.ERROR_INVALID_CREDENTIALS });
+				else
+					OnHttpPostCompleted(new List<string> { e.Error.Message });
+			}
+			else 
+				OnHttpPostCompleted(null);
 		}
 	}
 }

@@ -27,14 +27,22 @@ namespace prode
 			base.ViewDidLoad ();
 			View.BackgroundColor = UIColor.FromPatternImage(UIImage.FromFile("Default.png"));
 			
-			var button = UIButton.FromType(UIButtonType.RoundedRect);
-			button.Frame = new RectangleF(10, 260, 300, 40);
-			button.SetTitle("Cards", UIControlState.Normal);
-			button.TouchUpInside += delegate(object sender, EventArgs e) {
+			var getButton = UIButton.FromType(UIButtonType.RoundedRect);
+			getButton.Frame = new RectangleF(10, 200, 300, 40);
+			getButton.SetTitle("Get Cards", UIControlState.Normal);
+			getButton.TouchUpInside += delegate(object sender, EventArgs e) {
 				AppManager.Current.GetCards();
 			};
-			View.AddSubview(button);
-		}
+			View.AddSubview(getButton);
+
+			var postButton = UIButton.FromType(UIButtonType.RoundedRect);
+			postButton.Frame = new RectangleF(10, 260, 300, 40);
+			postButton.SetTitle("Submit Sample Card", UIControlState.Normal);
+			postButton.TouchUpInside += delegate(object sender, EventArgs e) {
+				AppManager.Current.SubmitCard();
+			};
+			View.AddSubview(postButton);
+}
 		
 		public override void ViewDidUnload ()
 		{

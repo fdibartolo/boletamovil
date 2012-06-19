@@ -106,7 +106,7 @@ namespace prode.domain
 			CardsService.OnGetCardsCompleted += _GetCardsCompleted;
 			CardsService.GetCardsAsync();
 		}
-		
+
 		private void _GetCardsCompleted(List<string> errors, List<Card> cards) {
 			if (errors != null) {
 				if (errors.Contains(Constants.ERROR_INVALID_CREDENTIALS)) {
@@ -130,6 +130,34 @@ namespace prode.domain
 			                  cards[0].Matches[1].GuestTeam,
 			                  cards[0].Matches[1].GuestUserScore);
 				
+			}
+			
+			OnNetworkUsageEnded();
+		}
+
+		public void SubmitCard() {
+			if (!ConfirmNetworkIsAvailable())
+				return;
+
+			OnNetworkUsageStarted("Tarjetas");
+			CardsService.OnSubmitCardCompleted += _SubmitCardCompleted;
+
+			var sampleData = "{\"card\":{\"week_id\":1,\"matches\":[{\"match_id\":1,\"home_score\":5, \"guest_score\":2},{\"match_id\":2,\"home_score\":2, \"guest_score\":3}]}}";
+			CardsService.SubmitCardAsync(sampleData);
+		}
+		
+		private void _SubmitCardCompleted(List<string> errors) {
+			if (errors != null) {
+				if (errors.Contains(Constants.ERROR_INVALID_CREDENTIALS)) {
+					ShowMessage(Constants.APP_TITLE, Constants.ERROR_INVALID_CREDENTIALS);
+					_uiClient.ApplicationStartUpMode(AppMode.Login);
+				}
+				else
+					ShowMessage(Constants.APP_TITLE, errors[0]);
+			}
+			else {
+				Console.WriteLine("Card submitted!");
+				//TODO: update Repository cards
 			}
 			
 			OnNetworkUsageEnded();
