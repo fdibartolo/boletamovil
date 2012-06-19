@@ -3,6 +3,7 @@ using System.Drawing;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 using prode.domain;
+using prode.domain.constants;
 
 namespace prode
 {
@@ -48,7 +49,7 @@ namespace prode
 		partial void Login (MonoTouch.UIKit.UIButton sender)
 		{
 			if ((string.IsNullOrEmpty(txtUsername.Text)) || (string.IsNullOrEmpty(txtPassword.Text))) {
-				new UIAlertView("Comunidad Prode", "Tanto el usuario como la contraseña deben ser provistos", null, "Ok").Show();
+				new UIAlertView(Constants.APP_TITLE, "Tanto el usuario como la contraseña deben ser provistos", null, "Ok").Show();
 				return;
 			}
 			
