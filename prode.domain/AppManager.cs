@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using prode.domain.constants;
 
 namespace prode.domain
 {
@@ -22,6 +23,7 @@ namespace prode.domain
 		
 		private UIClient _uiClient;
 		public LoginService LoginService { get; set; }
+		public CardsService CardsService { get; set; }
 		public UserStore UserStore { get; set; }
 		public Repository Repository { get; set; }
 		
@@ -36,6 +38,7 @@ namespace prode.domain
 			_uiClient = client;
 			
 			LoginService = new LoginService();
+			CardsService = new CardsService();
 			UserStore = new UserStore();
 			Repository = new Repository();
 
@@ -56,12 +59,17 @@ namespace prode.domain
 			if (!ConfirmNetworkIsAvailable())
 				return;
 			
-			LoginService.SetCredentials(nickname, password);
+			_SetCredentialsForAllServices(nickname, password);
 			new Thread(new ThreadStart(_LoginAsync)).Start();
 		}
 
+		void _SetCredentialsForAllServices(string nickname, string password) {
+			LoginService.SetCredentials(nickname, password);
+			CardsService.SetCredentials(nickname, password);
+		}
+		
 		private	void _LoginAsync() {
-			OnNetworkUsageStarted ("Ingresando");
+			OnNetworkUsageStarted("Ingresando");
 			LoginService.OnLoginCompleted += _LoginCompleted;
 			LoginService.LoginAsync();
 		}		
@@ -69,7 +77,7 @@ namespace prode.domain
 		private void _LoginCompleted(List<string> errors, User user) {
 			AppMode mode;
 			if (errors != null) {
-				ShowMessage("Comunidad Prode", errors[0]);
+				ShowMessage(Constants.APP_TITLE, errors[0]);
 				mode = AppMode.Login;
 			}
 			else {
@@ -83,14 +91,50 @@ namespace prode.domain
 			_uiClient.ApplicationStartUpMode(mode);
 		}
 
-		public void Logout ()
-		{
+		public void Logout() {
 			var user = new User();
 			Repository.User = user;
 			UserStore.SaveUser(user);
 			_uiClient.ApplicationStartUpMode(AppMode.Login);
 		}		
 		
+		public void GetCards() {
+			if (!ConfirmNetworkIsAvailable())
+				return;
+
+			OnNetworkUsageStarted("Tarjetas");
+			CardsService.OnGetCardsCompleted += _GetCardsCompleted;
+			CardsService.GetCardsAsync();
+		}
+		
+		private void _GetCardsCompleted(List<string> errors, List<Card> cards) {
+			if (errors != null) {
+				if (errors.Contains(Constants.ERROR_INVALID_CREDENTIALS)) {
+					ShowMessage(Constants.APP_TITLE, Constants.ERROR_INVALID_CREDENTIALS);
+					_uiClient.ApplicationStartUpMode(AppMode.Login);
+				}
+				else
+					ShowMessage(Constants.APP_TITLE, errors[0]);
+			}
+			else {
+				Console.WriteLine("Cards updated!");
+				Repository.Cards = cards;
+				
+				Console.WriteLine("Tourn name: {0}", cards[0].TournamentName);
+				Console.WriteLine("Week name: {0}", cards[0].WeekName);
+				Console.WriteLine("Match 2: ({0}) {1} ({2}-{3}) {4} ({5})", 
+			                  cards[0].Matches[1].HomeUserScore,
+			                  cards[0].Matches[1].HomeTeam,
+			                  cards[0].Matches[1].HomeRealScore,
+			                  cards[0].Matches[1].GuestRealScore,
+			                  cards[0].Matches[1].GuestTeam,
+			                  cards[0].Matches[1].GuestUserScore);
+				
+			}
+			
+			OnNetworkUsageEnded();
+		}
+
 		public void OnNetworkUsageStarted(){
 			_uiClient.NetworkUsageStarted(true, "Conectando");
 		}

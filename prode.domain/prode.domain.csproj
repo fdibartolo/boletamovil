@@ -35,6 +35,9 @@
     <Reference Include="System.Core" />
     <Reference Include="monotouch" />
     <Reference Include="System.Json" />
+    <Reference Include="Newtonsoft.Json.MonoTouch">
+      <HintPath>..\lib\Net35\Newtonsoft.Json.MonoTouch.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -56,5 +59,8 @@
     <Compile Include="Util\EncryptionManager.cs" />
     <Compile Include="Services\CardsService.cs" />
     <Compile Include="Services\BaseAbstractService.cs" />
+    <Compile Include="Model\Card.cs" />
+    <Compile Include="Model\Match.cs" />
+    <Compile Include="Util\JsonHelper.cs" />
   </ItemGroup>
 </Project>

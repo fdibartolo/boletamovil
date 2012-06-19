@@ -3,6 +3,7 @@ using System.Json;
 using System.Net;
 using System.Text;
 using System.Collections.Generic;
+using prode.domain.constants;
 
 namespace prode.domain
 {
@@ -31,7 +32,7 @@ namespace prode.domain
 		{
 			if (e.Error != null) {
 				if (e.Error.Message.Contains("401"))
-					OnHttpGetCompleted(new List<string> { "El usuario o la contraseña son incorrectas" }, null);
+					OnHttpGetCompleted(new List<string> { Constants.ERROR_INVALID_CREDENTIALS }, null);
 				else
 					OnHttpGetCompleted(new List<string> { e.Error.Message }, null);
 			}

@@ -2,6 +2,7 @@ using System;
 using System.Drawing;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
+using prode.domain;
 
 namespace prode
 {
@@ -25,6 +26,14 @@ namespace prode
 		{
 			base.ViewDidLoad ();
 			View.BackgroundColor = UIColor.FromPatternImage(UIImage.FromFile("Default.png"));
+			
+			var button = UIButton.FromType(UIButtonType.RoundedRect);
+			button.Frame = new RectangleF(10, 260, 300, 40);
+			button.SetTitle("Cards", UIControlState.Normal);
+			button.TouchUpInside += delegate(object sender, EventArgs e) {
+				AppManager.Current.GetCards();
+			};
+			View.AddSubview(button);
 		}
 		
 		public override void ViewDidUnload ()
