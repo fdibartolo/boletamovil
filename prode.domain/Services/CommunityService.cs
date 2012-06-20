@@ -30,14 +30,15 @@ namespace prode.domain
 				var community = Community.BuildListOfFromJson(result);
 				AppManager.Current.Repository.CommunityStats = community;
 				
-				Console.WriteLine("Tourn name: {0}", community[0].TournamentName);
-				Console.WriteLine("Group name: {0}", community[0].GroupName);
-				Console.WriteLine("Leader: {0} ({1} Pts)", 
-			                  community[0].Ranking[0].NickName,
-				              community[0].Ranking[0].Points);
-				
+				var msg = string.Format("Tourn name: {0} - Group name: {1} - Lider: {2} ({3} pts)", 
+								community[0].TournamentName,
+								community[0].GroupName,
+			                  	community[0].Ranking[0].NickName,
+				              	community[0].Ranking[0].Points);
+				AppManager.Current.OnNetworkUsageEnded();
+				AppManager.Current.ShowMessage("Comunidad", msg);
 			}			
-			AppManager.Current.OnNetworkUsageEnded();
+			//AppManager.Current.OnNetworkUsageEnded();
 		}
 	}
 }

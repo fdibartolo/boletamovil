@@ -30,17 +30,17 @@ namespace prode.domain
 				var cards = Card.BuildListOfFromJson(result);
 				AppManager.Current.Repository.Cards = cards;
 				
-				Console.WriteLine("Tourn name: {0}", cards[0].TournamentName);
-				Console.WriteLine("Week name: {0}", cards[0].WeekName);
-				Console.WriteLine("Match 2: ({0}) {1} ({2}-{3}) {4} ({5})", 
-			                  cards[0].Matches[1].HomeUserScore,
+				var msg = string.Format("Tourn name: {0} - Week name: {1} - UserMatch: {2} ({3}-{4}) {5}", 
+				              cards[0].TournamentName,
+				              cards[0].WeekName,
 			                  cards[0].Matches[1].HomeTeam,
-			                  cards[0].Matches[1].HomeRealScore,
-			                  cards[0].Matches[1].GuestRealScore,
-			                  cards[0].Matches[1].GuestTeam,
-			                  cards[0].Matches[1].GuestUserScore);
+			                  cards[0].Matches[1].HomeUserScore,
+			                  cards[0].Matches[1].GuestUserScore,
+				              cards[0].Matches[1].GuestTeam);
+				AppManager.Current.OnNetworkUsageEnded();
+				AppManager.Current.ShowMessage("Tarjetas", msg);
 			}
-			AppManager.Current.OnNetworkUsageEnded();
+			//AppManager.Current.OnNetworkUsageEnded();
 		}
 		
 		public void SubmitCard(string data) {
