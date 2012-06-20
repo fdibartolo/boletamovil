@@ -7,6 +7,7 @@ namespace prode.domain
 	{
 		public User User { get; set; }
 		public List<Card> Cards { get; set; }
+		public List<Community> CommunityStats { get; set; }
 	}
 }
 

@@ -14,7 +14,7 @@ namespace prode.domain
 		
 		public void LoginAsync() {
 			if ((string.IsNullOrEmpty(_loginNickName)) || (string.IsNullOrEmpty(_loginPassword)))
-				OnLoginCompleted(new List<string> {"There are no credentials set"}, null);
+				OnLoginCompleted(new List<string> { Constants.ERROR_INVALID_CREDENTIALS }, null);
 			
 			Console.WriteLine("LoginService: Attempting to login async...");
 			var url = string.Format(_usersUrl, _loginNickName, _loginPassword, Constants.WEB_SERVER_URL);

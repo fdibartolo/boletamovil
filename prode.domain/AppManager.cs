@@ -6,39 +6,26 @@ using prode.domain.constants;
 
 namespace prode.domain
 {
-	public interface UIClient {
-		bool IsNetworkAvailable();
-		void NetworkUsageStarted(bool blockUser, string title);
-		void NetworkUsageEnded();
-		void ShowMessage(string title, string message);
-		void ApplicationStartUpMode(AppMode mode);
-	}	
-	
-	public enum AppMode {
-		Login,
-		Tabs
-	}
-
 	public class AppManager {
-		
 		private UIClient _uiClient;
 		public LoginService LoginService { get; set; }
 		public CardsService CardsService { get; set; }
+		public CommunityService CommunityService { get; set; }
 		public UserStore UserStore { get; set; }
 		public Repository Repository { get; set; }
 		
+		static AppManager _current;
 		public static AppManager Current { get {
 				return _current;
 			}
 		}
-		static AppManager _current;
 		
 		public AppManager(UIClient client){
-			
 			_uiClient = client;
 			
 			LoginService = new LoginService();
 			CardsService = new CardsService();
+			CommunityService = new CommunityService();
 			UserStore = new UserStore();
 			Repository = new Repository();
 
@@ -63,9 +50,10 @@ namespace prode.domain
 			new Thread(new ThreadStart(_LoginAsync)).Start();
 		}
 
-		void _SetCredentialsForAllServices(string nickname, string password) {
+		private void _SetCredentialsForAllServices(string nickname, string password) {
 			LoginService.SetCredentials(nickname, password);
 			CardsService.SetCredentials(nickname, password);
+			CommunityService.SetCredentials(nickname, password);
 		}
 		
 		private	void _LoginAsync() {
@@ -131,7 +119,6 @@ namespace prode.domain
 			                  cards[0].Matches[1].GuestUserScore);
 				
 			}
-			
 			OnNetworkUsageEnded();
 		}
 
@@ -159,10 +146,41 @@ namespace prode.domain
 				Console.WriteLine("Card submitted!");
 				//TODO: update Repository cards
 			}
-			
 			OnNetworkUsageEnded();
 		}
 
+		public void GetCommunityStats() {
+			if (!ConfirmNetworkIsAvailable())
+				return;
+
+			OnNetworkUsageStarted("Comunidad");
+			CommunityService.OnGetCommunityCompleted += _GetCommunityCompleted;
+			CommunityService.GetCommunityAsync();
+		}
+		
+		private void _GetCommunityCompleted(List<string> errors, List<Community> community) {
+			if (errors != null) {
+				if (errors.Contains(Constants.ERROR_INVALID_CREDENTIALS)) {
+					ShowMessage(Constants.APP_TITLE, Constants.ERROR_INVALID_CREDENTIALS);
+					_uiClient.ApplicationStartUpMode(AppMode.Login);
+				}
+				else
+					ShowMessage(Constants.APP_TITLE, errors[0]);
+			}
+			else {
+				Console.WriteLine("Community stats updated!");
+				Repository.CommunityStats = community;
+				
+				Console.WriteLine("Tourn name: {0}", community[0].TournamentName);
+				Console.WriteLine("Group name: {0}", community[0].GroupName);
+				Console.WriteLine("Leader: {0} ({1} Pts)", 
+			                  community[0].Ranking[0].NickName,
+				              community[0].Ranking[0].Points);
+				
+			}
+			OnNetworkUsageEnded();
+		}
+		
 		public void OnNetworkUsageStarted(){
 			_uiClient.NetworkUsageStarted(true, "Conectando");
 		}
@@ -191,6 +209,3 @@ namespace prode.domain
 		}
 	}
 }
-
-
-

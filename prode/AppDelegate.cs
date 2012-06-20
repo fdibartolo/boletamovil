@@ -5,6 +5,7 @@ using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 using prode.domain;
 using System.Threading;
+using prode.domain.constants;
 
 namespace prode
 {

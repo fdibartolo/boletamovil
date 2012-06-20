@@ -9,5 +9,10 @@ namespace prode.domain.constants
 		
 		public static string ERROR_INVALID_CREDENTIALS = "El usuario o la contraseña son incorrectas";
 	}
+	
+	public enum AppMode {
+		Login,
+		Tabs
+	}
 }
 
