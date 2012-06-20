@@ -31,7 +31,7 @@ namespace prode
 			button.Frame = new RectangleF(10, 260, 300, 40);
 			button.SetTitle("Get Community Stats", UIControlState.Normal);
 			button.TouchUpInside += delegate(object sender, EventArgs e) {
-				AppManager.Current.GetCommunityStats();
+				AppManager.Current.CommunityService.GetCommunityStats();
 			};
 			View.AddSubview(button);		}
 		

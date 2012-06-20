@@ -31,7 +31,7 @@ namespace prode
 			getButton.Frame = new RectangleF(10, 200, 300, 40);
 			getButton.SetTitle("Get Cards", UIControlState.Normal);
 			getButton.TouchUpInside += delegate(object sender, EventArgs e) {
-				AppManager.Current.GetCards();
+				AppManager.Current.CardsService.GetCards();
 			};
 			View.AddSubview(getButton);
 
@@ -39,7 +39,8 @@ namespace prode
 			postButton.Frame = new RectangleF(10, 260, 300, 40);
 			postButton.SetTitle("Submit Sample Card", UIControlState.Normal);
 			postButton.TouchUpInside += delegate(object sender, EventArgs e) {
-				AppManager.Current.SubmitCard();
+				var sampleData = "{\"card\":{\"week_id\":1,\"matches\":[{\"match_id\":1,\"home_score\":8, \"guest_score\":6},{\"match_id\":2,\"home_score\":7, \"guest_score\":0}]}}";
+				AppManager.Current.CardsService.SubmitCard(sampleData);
 			};
 			View.AddSubview(postButton);
 }
