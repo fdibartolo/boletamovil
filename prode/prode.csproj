@@ -84,6 +84,7 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="monotouch" />
+    <Reference Include="MonoTouch.Dialog-1" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -111,6 +112,7 @@
     <Compile Include="Util\LoadingHUDView.cs" />
     <Compile Include="PagedViewController.cs" />
     <Compile Include="PagesDataSource.cs" />
+    <Compile Include="RankingView.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="LoginViewController.xib" />

@@ -49,7 +49,7 @@ namespace prode
 			_cardsViewController = new CardsViewController();
 			_userViewController = new UserViewController();
 		}
-		
+
 		public bool IsNetworkAvailable() {
 			return Reachability.IsRemoteHostReachable();
 		}

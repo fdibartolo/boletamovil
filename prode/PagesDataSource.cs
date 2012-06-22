@@ -23,21 +23,8 @@ namespace prode
 	        UIViewController viewController = new UIViewController();
 			viewController.View.BackgroundColor = UIColor.FromPatternImage(UIImage.FromFile("Default.png"));
 
-	        viewController.View.AddSubview(new UILabel{
-				Text= _stats[i].GroupName ?? "Ranking General",
-				TextAlignment = UITextAlignment.Center,
-				Frame = new RectangleF(0,10,320,40),
-				TextColor = UIColor.White,
-				Font = UIFont.BoldSystemFontOfSize(18),
-				BackgroundColor = UIColor.Clear
-	        });
+	        viewController.View.AddSubview(new RankingView(_stats[i]));
 			
-			var refreshButton = UIButton.FromType(UIButtonType.RoundedRect);
-			refreshButton.Frame = new RectangleF(260, 10, 40, 40);
-			refreshButton.SetTitle("R", UIControlState.Normal);
-			refreshButton.TouchUpInside += _HandleTouchUpInside;
-			viewController.View.AddSubview(refreshButton);
-				
 	        return viewController;
 	    }
 

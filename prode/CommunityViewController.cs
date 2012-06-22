@@ -3,17 +3,28 @@ using System.Drawing;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 using prode.domain;
+using MonoTouch.Dialog;
 
 namespace prode
 {
-	public partial class CommunityViewController : UIViewController
+	public partial class CommunityViewController : DialogViewController
 	{
 		private PagedViewController _pagedViewController;
 		
-		public CommunityViewController () : base ("CommunityViewController", null)
+		public CommunityViewController () : base (new RootElement (String.Empty), true)
 		{
 			Title = NSBundle.MainBundle.LocalizedString ("Comunidad", "Comunidad");
 			TabBarItem.Image = UIImage.FromFile("Images/Community.png");
+			
+			RefreshRequested += _HandleRefreshRequested;
+		}
+
+		private void _HandleRefreshRequested (object sender, EventArgs e) {
+			AppManager.Current.CommunityService.OnGetCommunityStatsCompleted += delegate {
+				ReloadPages();
+				this.ReloadComplete();
+			};
+			AppManager.Current.CommunityService.GetCommunityStatsAsync();
 		}
 		
 		public override void DidReceiveMemoryWarning ()
@@ -24,26 +35,24 @@ namespace prode
 			// Release any cached data, images, etc that aren't in use.
 		}
 		
-		public override void ViewDidLoad ()
-		{
+		public override void ViewDidLoad() {
 			base.ViewDidLoad ();
 			AppManager.Current.CommunityService.GetCommunityStats(); //sync call
+			
+			if (_pagedViewController == null) {
+				_pagedViewController = new PagedViewController{
+	    			PagedViewDataSource = new PagesDataSource(this, AppManager.Current.Repository.CommunityStats)
+				};
+			}
 		}
 		
-		public override void ViewWillAppear (bool animated)
-		{
+		public override void ViewWillAppear (bool animated) {
 			base.ViewWillAppear (animated);
-			Console.WriteLine ("community view will appear");
-			
-			_pagedViewController = new PagedViewController{
-    			PagedViewDataSource = new PagesDataSource(this, AppManager.Current.Repository.CommunityStats)
-			};
-			this.View.AddSubview(_pagedViewController.View);
+			View.AddSubview(_pagedViewController.View);
 			ReloadPages();
 		}
 		
-		public override void ViewDidUnload ()
-		{
+		public override void ViewDidUnload() {
 			base.ViewDidUnload ();
 			
 			// Clear any references to subviews of the main view in order to
