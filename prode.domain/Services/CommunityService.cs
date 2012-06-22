@@ -4,9 +4,12 @@ using prode.domain.constants;
 
 namespace prode.domain
 {
+	public delegate void GetCommunityStatsCompleted();
+
 	public class CommunityService : BaseAbstractService
 	{
 		private const string _communityUrl = "https://{0}:{1}@{2}/api/community";
+		public GetCommunityStatsCompleted OnGetCommunityStatsCompleted;
 		
 		public void GetCommunityStats() {
 			if (!AppManager.Current.ConfirmNetworkIsAvailable())
@@ -47,6 +50,7 @@ namespace prode.domain
 				Console.WriteLine("Community stats updated!");
 				var community = Community.BuildListOfFromJson(result);
 				AppManager.Current.Repository.CommunityStats = community;
+				OnGetCommunityStatsCompleted();
 			}			
 			AppManager.Current.OnNetworkUsageEnded();
 		}

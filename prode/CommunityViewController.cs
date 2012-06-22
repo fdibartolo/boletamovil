@@ -8,7 +8,7 @@ namespace prode
 {
 	public partial class CommunityViewController : UIViewController
 	{
-		PagedViewController pagedViewController;
+		private PagedViewController _pagedViewController;
 		
 		public CommunityViewController () : base ("CommunityViewController", null)
 		{
@@ -35,11 +35,11 @@ namespace prode
 			base.ViewWillAppear (animated);
 			Console.WriteLine ("community view will appear");
 			
-			pagedViewController = new PagedViewController{
-    			PagedViewDataSource = new PagesDataSource(AppManager.Current.Repository.CommunityStats)
+			_pagedViewController = new PagedViewController{
+    			PagedViewDataSource = new PagesDataSource(this, AppManager.Current.Repository.CommunityStats)
 			};
-			this.View.AddSubview(pagedViewController.View);
-			pagedViewController.ReloadPages();	
+			this.View.AddSubview(_pagedViewController.View);
+			ReloadPages();
 		}
 		
 		public override void ViewDidUnload ()
@@ -59,6 +59,10 @@ namespace prode
 			// Return true for supported orientations
 			//return (toInterfaceOrientation != UIInterfaceOrientation.PortraitUpsideDown);
 			return false;
+		}
+		
+		public void ReloadPages() {
+			_pagedViewController.ReloadPages();	
 		}
 	}
 }

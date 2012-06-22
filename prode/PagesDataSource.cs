@@ -9,8 +9,10 @@ namespace prode
 {
 	public class PagesDataSource : IPagedViewDataSource {
 		private List<Community> _stats;
+		private CommunityViewController _controller;
 
-		public PagesDataSource(List<Community> communityStats) {
+		public PagesDataSource(CommunityViewController controller, List<Community> communityStats) {
+			_controller = controller;
 			_stats = communityStats;
 		}	
 		
@@ -40,11 +42,15 @@ namespace prode
 	    }
 
 	    void _HandleTouchUpInside(object sender, EventArgs e) {
+			AppManager.Current.CommunityService.OnGetCommunityStatsCompleted += delegate {
+				_controller.ReloadPages();
+			};
 			AppManager.Current.CommunityService.GetCommunityStatsAsync();
-			//Reload(); hook up to callback
 	    }
 
-    	public void Reload(){}
+    	public void Reload(){
+			_stats = AppManager.Current.Repository.CommunityStats;
+		}
 	}
 }
 
