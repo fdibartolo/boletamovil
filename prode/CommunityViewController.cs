@@ -8,6 +8,8 @@ namespace prode
 {
 	public partial class CommunityViewController : UIViewController
 	{
+		PagedViewController pagedViewController;
+		
 		public CommunityViewController () : base ("CommunityViewController", null)
 		{
 			Title = NSBundle.MainBundle.LocalizedString ("Comunidad", "Comunidad");
@@ -25,15 +27,20 @@ namespace prode
 		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
-			View.BackgroundColor = UIColor.FromPatternImage(UIImage.FromFile("Default.png"));
-
-			var button = UIButton.FromType(UIButtonType.RoundedRect);
-			button.Frame = new RectangleF(10, 260, 300, 40);
-			button.SetTitle("Get Community Stats", UIControlState.Normal);
-			button.TouchUpInside += delegate(object sender, EventArgs e) {
-				AppManager.Current.CommunityService.GetCommunityStats();
+			AppManager.Current.CommunityService.GetCommunityStats(); //sync call
+		}
+		
+		public override void ViewWillAppear (bool animated)
+		{
+			base.ViewWillAppear (animated);
+			Console.WriteLine ("community view will appear");
+			
+			pagedViewController = new PagedViewController{
+    			PagedViewDataSource = new PagesDataSource(AppManager.Current.Repository.CommunityStats)
 			};
-			View.AddSubview(button);		}
+			this.View.AddSubview(pagedViewController.View);
+			pagedViewController.ReloadPages();	
+		}
 		
 		public override void ViewDidUnload ()
 		{
@@ -50,7 +57,8 @@ namespace prode
 		public override bool ShouldAutorotateToInterfaceOrientation (UIInterfaceOrientation toInterfaceOrientation)
 		{
 			// Return true for supported orientations
-			return (toInterfaceOrientation != UIInterfaceOrientation.PortraitUpsideDown);
+			//return (toInterfaceOrientation != UIInterfaceOrientation.PortraitUpsideDown);
+			return false;
 		}
 	}
 }

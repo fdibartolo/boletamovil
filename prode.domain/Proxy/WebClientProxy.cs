@@ -17,6 +17,21 @@ namespace prode.domain
 		
 		public WebClientProxy() { _webClient = new WebClient(); }
 
+		public string HttpGet(string url) {
+			Uri uri = new Uri(url);
+			string result = null;
+			
+			try {
+				result = _webClient.DownloadString(uri);
+			} catch (Exception ex) {
+				if (ex.Message.Contains("401"))
+					AppManager.Current.ShowMessage(Constants.APP_TITLE, Constants.ERROR_INVALID_CREDENTIALS);
+				else
+					AppManager.Current.ShowMessage(Constants.APP_TITLE, ex.Message);
+			}
+			return result;
+		}
+
 		public void HttpGetAsync(string url) {
 			Uri uri = new Uri(url);
 			_webClient.DownloadStringCompleted += _HandleDownloadStringCompleted;

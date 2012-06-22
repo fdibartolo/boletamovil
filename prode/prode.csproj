@@ -110,6 +110,8 @@
     <Compile Include="Extensions\TabBarControllerExtension.cs" />
     <Compile Include="Util\Reachability.cs" />
     <Compile Include="Util\LoadingHUDView.cs" />
+    <Compile Include="PagedViewController.cs" />
+    <Compile Include="PagesDataSource.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="LoginViewController.xib" />

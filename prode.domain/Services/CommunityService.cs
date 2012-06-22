@@ -12,7 +12,25 @@ namespace prode.domain
 			if (!AppManager.Current.ConfirmNetworkIsAvailable())
 				return;
 			
-			AppManager.Current.OnNetworkUsageStarted("Comunidad");
+			AppManager.Current.OnNetworkUsageStarted("Estadísticas Comunidad");
+			
+			Console.WriteLine("CommunityService: Attempting to get community data sync...");
+			var url = string.Format(_communityUrl, _loginNickName, _loginPassword, Constants.WEB_SERVER_URL);
+			
+			var client = new WebClientProxy();
+			var result = client.HttpGet(url);
+			
+			if (!string.IsNullOrEmpty(result))
+				AppManager.Current.Repository.CommunityStats = Community.BuildListOfFromJson(result);
+
+			AppManager.Current.OnNetworkUsageEnded();
+		}
+		
+		public void GetCommunityStatsAsync() {
+			if (!AppManager.Current.ConfirmNetworkIsAvailable())
+				return;
+			
+			AppManager.Current.OnNetworkUsageStarted("Estadísticas Comunidad");
 			
 			Console.WriteLine("CommunityService: Attempting to get community data async...");
 			var url = string.Format(_communityUrl, _loginNickName, _loginPassword, Constants.WEB_SERVER_URL);
@@ -29,16 +47,8 @@ namespace prode.domain
 				Console.WriteLine("Community stats updated!");
 				var community = Community.BuildListOfFromJson(result);
 				AppManager.Current.Repository.CommunityStats = community;
-				
-				var msg = string.Format("Tourn name: {0} - Group name: {1} - Lider: {2} ({3} pts)", 
-								community[0].TournamentName,
-								community[0].GroupName,
-			                  	community[0].Ranking[0].NickName,
-				              	community[0].Ranking[0].Points);
-				AppManager.Current.OnNetworkUsageEnded();
-				AppManager.Current.ShowMessage("Comunidad", msg);
 			}			
-			//AppManager.Current.OnNetworkUsageEnded();
+			AppManager.Current.OnNetworkUsageEnded();
 		}
 	}
 }
