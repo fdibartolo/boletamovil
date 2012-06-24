@@ -33,6 +33,12 @@ namespace prode.domain
 
 			return cards as List<Card>;
 		}
+
+		public bool IsEditable()
+		{
+			DateTime dueDate;
+			return ((DateTime.TryParse(WeekDueDate, out dueDate)) && (dueDate > DateTime.Now));
+		}
 	}
 }
 

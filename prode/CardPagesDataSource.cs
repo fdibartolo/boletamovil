@@ -24,8 +24,17 @@ namespace prode
 
 	        viewController.View.AddSubview(new CardView(_cards[i]));
 			
-			DateTime dueDate;
-			if ((DateTime.TryParse(_cards[i].WeekDueDate, out dueDate)) && (dueDate > DateTime.Now)) {
+			var matchDetailView = new MatchDetailView();
+			int verticalOffset = 68;
+			
+			if (_cards[i].IsEditable()) {
+				foreach (var match in _cards[i].Matches) {
+					var matches = matchDetailView.BuildForEdit(match, verticalOffset);
+					verticalOffset += 28;
+					
+					viewController.View.AddSubviews(matches);
+				}			
+				
 				var saveButton = new GlassButton(new RectangleF (10, 354, 300, 40)) {
 	     			NormalColor = UIColor.FromRGBA(222/255f, 222/255f, 225/255f, 0.25f),
 	     			HighlightedColor = UIColor.Black
@@ -38,6 +47,19 @@ namespace prode
 				viewController.View.AddSubview(saveButton);
 			}
 			else {
+				foreach (var match in _cards[i].Matches) {
+					var matches = matchDetailView.BuildForReadOnly(match, verticalOffset);
+					verticalOffset += 28;
+					
+					viewController.View.AddSubviews(matches);
+				
+//					DrawingBrush rectangle = new DrawingBrush() {
+//						Frame = new RectangleF(140, verticalOffset, 40, 24),
+//						StrokeColor = UIColor.Red
+//					};
+//					viewController.View.AddSubview(rectangle);
+				}			
+
 				viewController.View.AddSubview(
 					new UILabel{
 						Text = string.Format("Fecha cerrada. Obtuviste 15 puntos!"),

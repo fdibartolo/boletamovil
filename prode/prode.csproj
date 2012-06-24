@@ -116,6 +116,8 @@
     <Compile Include="CardPagesDataSource.cs" />
     <Compile Include="CardView.cs" />
     <Compile Include="TutorialViewController.cs" />
+    <Compile Include="MatchDetailView.cs" />
+    <Compile Include="Util\FrameView.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="LoginViewController.xib" />

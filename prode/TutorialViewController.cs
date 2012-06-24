@@ -1,6 +1,8 @@
 using System;
 using MonoTouch.UIKit;
 using System.Drawing;
+using MonoTouch.Dialog;
+using prode.domain;
 
 namespace prode
 {
@@ -29,6 +31,18 @@ namespace prode
 					Font = UIFont.SystemFontOfSize(18),
 					BackgroundColor = UIColor.Clear
 			});
+			
+			var logoutButton = new GlassButton(new RectangleF (10, 390, 300, 40)) {
+     			NormalColor = UIColor.FromRGBA(222/255f, 222/255f, 225/255f, 0.25f),
+     			HighlightedColor = UIColor.Black
+ 			};
+			logoutButton.SetTitle("Cerrar Sesión", UIControlState.Normal);
+			logoutButton.Font = UIFont.BoldSystemFontOfSize(14);
+			logoutButton.Tapped += delegate {
+				AppManager.Current.Logout();
+			};
+			View.AddSubview(logoutButton);
+			
 		}
 		
 		public override void ViewDidUnload ()
