@@ -22,7 +22,7 @@ namespace prode.domain
 			
 			var client = new WebClientProxy();
 			var result = client.HttpGet(url);
-			
+
 			if (!string.IsNullOrEmpty(result))
 				AppManager.Current.Repository.CommunityStats = Community.BuildListOfFromJson(result);
 

@@ -37,11 +37,10 @@ namespace prode
 		
 		public override void ViewDidLoad() {
 			base.ViewDidLoad ();
-			AppManager.Current.CommunityService.GetCommunityStats(); //sync call
 			
 			if (_pagedViewController == null) {
 				_pagedViewController = new PagedViewController{
-	    			PagedViewDataSource = new PagesDataSource(this, AppManager.Current.Repository.CommunityStats)
+	    			PagedViewDataSource = new CommunityPagesDataSource(this, AppManager.Current.Repository.CommunityStats)
 				};
 			}
 		}

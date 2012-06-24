@@ -62,6 +62,7 @@ namespace prode
 			View.AddSubview(
 				new UILabel{
 					Text = "Al cerrar la sesión, la próxima vez que abras esta aplicación, deberás volver a ingresar tu usuario y contraseña",
+					TextAlignment = UITextAlignment.Center,
 					Frame = new RectangleF(15,340,290,80),
 					Lines = 3,
 					TextColor = UIColor.White,

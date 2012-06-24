@@ -4,11 +4,32 @@ using System.Collections.Generic;
 
 namespace prode.domain
 {
+	public delegate void GetCardsCompleted();
+
 	public class CardsService : BaseAbstractService
 	{
 		private const string _cardsUrl = "https://{0}:{1}@{2}/api/cards";
+		public GetCardsCompleted OnGetCardsCompleted;
 		
 		public void GetCards() {
+			if (!AppManager.Current.ConfirmNetworkIsAvailable())
+				return;
+			
+			AppManager.Current.OnNetworkUsageStarted("Tarjetas");
+			
+			Console.WriteLine("CardsService: Attempting to get cards sync...");
+			var url = string.Format(_cardsUrl, _loginNickName, _loginPassword, Constants.WEB_SERVER_URL);
+			
+			var client = new WebClientProxy();
+			var result = client.HttpGet(url);
+			
+			if (!string.IsNullOrEmpty(result))
+				AppManager.Current.Repository.Cards = Card.BuildListOfFromJson(result);
+			
+			AppManager.Current.OnNetworkUsageEnded();
+		}
+		
+		public void GetCardsAsync() {
 			if (!AppManager.Current.ConfirmNetworkIsAvailable())
 				return;
 
@@ -27,20 +48,10 @@ namespace prode.domain
 				_HandleError(errors);
 			else {
 				Console.WriteLine("Cards updated!");
-				var cards = Card.BuildListOfFromJson(result);
-				AppManager.Current.Repository.Cards = cards;
-				
-				var msg = string.Format("Tourn name: {0} - Week name: {1} - UserMatch: {2} ({3}-{4}) {5}", 
-				              cards[0].TournamentName,
-				              cards[0].WeekName,
-			                  cards[0].Matches[1].HomeTeam,
-			                  cards[0].Matches[1].HomeUserScore,
-			                  cards[0].Matches[1].GuestUserScore,
-				              cards[0].Matches[1].GuestTeam);
-				AppManager.Current.OnNetworkUsageEnded();
-				AppManager.Current.ShowMessage("Tarjetas", msg);
+				AppManager.Current.Repository.Cards = Card.BuildListOfFromJson(result);
+				OnGetCardsCompleted();
 			}
-			//AppManager.Current.OnNetworkUsageEnded();
+			AppManager.Current.OnNetworkUsageEnded();
 		}
 		
 		public void SubmitCard(string data) {

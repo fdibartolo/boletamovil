@@ -12,7 +12,8 @@ namespace prode.domain.constants
 	
 	public enum AppMode {
 		Login,
-		Tabs
+		Tabs,
+		Newbie
 	}
 }
 

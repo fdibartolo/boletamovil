@@ -111,8 +111,11 @@
     <Compile Include="Util\Reachability.cs" />
     <Compile Include="Util\LoadingHUDView.cs" />
     <Compile Include="PagedViewController.cs" />
-    <Compile Include="PagesDataSource.cs" />
     <Compile Include="RankingView.cs" />
+    <Compile Include="CommunityPagesDataSource.cs" />
+    <Compile Include="CardPagesDataSource.cs" />
+    <Compile Include="CardView.cs" />
+    <Compile Include="TutorialViewController.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="LoginViewController.xib" />

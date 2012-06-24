@@ -21,6 +21,7 @@ namespace prode
 		private UIViewController _communityViewController;
 		private UIViewController _cardsViewController;
 		private UIViewController _userViewController;
+		private UIViewController _tutorialViewController;
 
 		//
 		// This method is invoked when the application has loaded and is ready to run. In this 
@@ -48,6 +49,7 @@ namespace prode
 			_communityViewController = new CommunityViewController();
 			_cardsViewController = new CardsViewController();
 			_userViewController = new UserViewController();
+			_tutorialViewController = new TutorialViewController();
 		}
 
 		public bool IsNetworkAvailable() {
@@ -100,6 +102,10 @@ namespace prode
 				
 				case AppMode.Tabs:
 					Console.WriteLine("Launching tabs mode...");
+
+					AppManager.Current.CommunityService.GetCommunityStats(); //sync call
+					AppManager.Current.CardsService.GetCards(); //sync call
+
 					var tabBarController = new UITabBarController();
 					tabBarController.ViewControllers = new UIViewController [] {
 						_communityViewController,
@@ -109,6 +115,15 @@ namespace prode
 					InvokeOnMainThread(()=>{
 						_RemoveAllSubviews();
 						window.RootViewController = tabBarController;
+					});
+					break;
+
+				case AppMode.Newbie:
+					Console.WriteLine("Launching newbie mode...");
+					_tutorialViewController.View.Frame = new System.Drawing.RectangleF(0,20,320,460);
+					InvokeOnMainThread(()=>{
+						_RemoveAllSubviews();
+						window.AddSubview(_tutorialViewController.View);
 					});
 					break;
 			}

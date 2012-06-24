@@ -3,15 +3,27 @@ using System.Drawing;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 using prode.domain;
+using MonoTouch.Dialog;
 
 namespace prode
 {
-	public partial class CardsViewController : UIViewController
+	public partial class CardsViewController : DialogViewController
 	{
-		public CardsViewController () : base ("CardsViewController", null)
+		private PagedViewController _pagedViewController;
+
+		public CardsViewController () : base (new RootElement (String.Empty), true)
 		{
 			Title = NSBundle.MainBundle.LocalizedString ("Mis Tarjetas", "MisTarjetas");
 			TabBarItem.Image = UIImage.FromFile("Images/Cards.png");
+			RefreshRequested += _HandleRefreshRequested;
+		}
+
+		private void _HandleRefreshRequested (object sender, EventArgs e) {
+			AppManager.Current.CardsService.OnGetCardsCompleted += delegate {
+				ReloadPages();
+				this.ReloadComplete();
+			};
+			AppManager.Current.CardsService.GetCardsAsync();
 		}
 		
 		public override void DidReceiveMemoryWarning ()
@@ -22,28 +34,35 @@ namespace prode
 			// Release any cached data, images, etc that aren't in use.
 		}
 		
-		public override void ViewDidLoad ()
-		{
+		public override void ViewDidLoad() {
 			base.ViewDidLoad ();
-			View.BackgroundColor = UIColor.FromPatternImage(UIImage.FromFile("Default.png"));
 			
-			var getButton = UIButton.FromType(UIButtonType.RoundedRect);
-			getButton.Frame = new RectangleF(10, 200, 300, 40);
-			getButton.SetTitle("Get Cards", UIControlState.Normal);
-			getButton.TouchUpInside += delegate(object sender, EventArgs e) {
-				AppManager.Current.CardsService.GetCards();
-			};
-			View.AddSubview(getButton);
-
-			var postButton = UIButton.FromType(UIButtonType.RoundedRect);
-			postButton.Frame = new RectangleF(10, 260, 300, 40);
-			postButton.SetTitle("Submit Sample Card", UIControlState.Normal);
-			postButton.TouchUpInside += delegate(object sender, EventArgs e) {
-				var sampleData = "{\"card\":{\"week_id\":1,\"matches\":[{\"match_id\":1,\"home_score\":8, \"guest_score\":6},{\"match_id\":2,\"home_score\":7, \"guest_score\":0}]}}";
-				AppManager.Current.CardsService.SubmitCard(sampleData);
-			};
-			View.AddSubview(postButton);
-}
+			if (_pagedViewController == null) {
+				_pagedViewController = new PagedViewController{
+	    			PagedViewDataSource = new CardPagesDataSource(this, AppManager.Current.Repository.Cards)
+				};
+			}
+		}
+		
+//		public override void ViewDidLoad ()
+//		{
+//			base.ViewDidLoad ();
+//
+//			var postButton = UIButton.FromType(UIButtonType.RoundedRect);
+//			postButton.Frame = new RectangleF(10, 260, 300, 40);
+//			postButton.SetTitle("Submit Sample Card", UIControlState.Normal);
+//			postButton.TouchUpInside += delegate(object sender, EventArgs e) {
+//				var sampleData = "{\"card\":{\"week_id\":1,\"matches\":[{\"match_id\":1,\"home_score\":8, \"guest_score\":6},{\"match_id\":2,\"home_score\":7, \"guest_score\":0}]}}";
+//				AppManager.Current.CardsService.SubmitCard(sampleData);
+//			};
+//			View.AddSubview(postButton);
+//		}
+		
+		public override void ViewWillAppear (bool animated) {
+			base.ViewWillAppear (animated);
+			View.AddSubview(_pagedViewController.View);
+			ReloadPages();
+		}
 		
 		public override void ViewDidUnload ()
 		{
@@ -62,6 +81,10 @@ namespace prode
 			// Return true for supported orientations
 			//return (toInterfaceOrientation != UIInterfaceOrientation.PortraitUpsideDown);
 			return false;
+		}
+
+		public void ReloadPages() {
+			_pagedViewController.ReloadPages();	
 		}
 	}
 }
