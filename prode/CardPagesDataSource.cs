@@ -35,16 +35,19 @@ namespace prode
 					viewController.View.AddSubviews(matches);
 				}			
 				
-				var saveButton = new GlassButton(new RectangleF (10, 354, 300, 40)) {
+				var submitCardButton = new GlassButton(new RectangleF (10, 354, 300, 40)) {
 	     			NormalColor = UIColor.FromRGBA(222/255f, 222/255f, 225/255f, 0.25f),
 	     			HighlightedColor = UIColor.Black
 	 			};
-				saveButton.SetTitle("Guardar Tarjeta", UIControlState.Normal);
-				saveButton.Font = UIFont.BoldSystemFontOfSize(14);
-				saveButton.Tapped += delegate {
-					new UIAlertView("CP", "post card", null,"Ok").Show();
+				submitCardButton.SetTitle("Guardar Tarjeta", UIControlState.Normal);
+				submitCardButton.Font = UIFont.BoldSystemFontOfSize(14);
+				submitCardButton.Tapped += delegate {
+					//app could have been open for a while, and card might no longer be editable
+					if (_cards[i].IsEditable()) {
+						AppManager.Current.CardsService.SubmitCard(_cards[i]);
+					}
 				};
-				viewController.View.AddSubview(saveButton);
+				viewController.View.AddSubview(submitCardButton);
 			}
 			else {
 				foreach (var match in _cards[i].Matches) {
@@ -67,12 +70,12 @@ namespace prode
 	        return viewController;
 	    }
 
-	    void _HandleTouchUpInside(object sender, EventArgs e) {
-			AppManager.Current.CardsService.OnGetCardsCompleted += delegate {
-				_controller.ReloadPages();
-			};
-			AppManager.Current.CardsService.GetCardsAsync();
-	    }
+//	    void _HandleTouchUpInside(object sender, EventArgs e) {
+//			AppManager.Current.CardsService.OnGetCardsCompleted += delegate {
+//				_controller.ReloadPages();
+//			};
+//			AppManager.Current.CardsService.GetCardsAsync();
+//	    }
 
     	public void Reload(){
 			_cards = AppManager.Current.Repository.Cards;

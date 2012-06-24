@@ -26,12 +26,12 @@ namespace prode
 	        return viewController;
 	    }
 
-	    void _HandleTouchUpInside(object sender, EventArgs e) {
-			AppManager.Current.CommunityService.OnGetCommunityStatsCompleted += delegate {
-				_controller.ReloadPages();
-			};
-			AppManager.Current.CommunityService.GetCommunityStatsAsync();
-	    }
+//	    void _HandleTouchUpInside(object sender, EventArgs e) {
+//			AppManager.Current.CommunityService.OnGetCommunityStatsCompleted += delegate {
+//				_controller.ReloadPages();
+//			};
+//			AppManager.Current.CommunityService.GetCommunityStatsAsync();
+//	    }
 
     	public void Reload(){
 			_stats = AppManager.Current.Repository.CommunityStats;

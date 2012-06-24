@@ -19,11 +19,30 @@ namespace prode
 		}
 
 		private void _HandleRefreshRequested (object sender, EventArgs e) {
+			//InvokeOnMainThread(()=>{
+				_ResignKeyboardIfNeeded();	
+			//});
 			AppManager.Current.CardsService.OnGetCardsCompleted += delegate {
 				ReloadPages();
 				this.ReloadComplete();
 			};
 			AppManager.Current.CardsService.GetCardsAsync();
+		}
+		
+		private void _ResignKeyboardIfNeeded() {
+			Console.WriteLine ("Dismissing keyboard");
+		    foreach (var item in this) {
+		        var tf = item as UITextField;
+		        if (tf != null && tf.IsFirstResponder) {
+					Console.WriteLine ("textfield with keyb found"); //BUG: no encuentra ninguno
+		            tf.ResignFirstResponder ();
+				}
+		    }
+		}
+
+		public override void ViewWillDisappear (bool animated) {
+			_ResignKeyboardIfNeeded();	
+			base.ViewWillDisappear (animated);
 		}
 		
 		public override void DidReceiveMemoryWarning ()

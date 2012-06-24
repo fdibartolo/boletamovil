@@ -158,7 +158,7 @@ namespace prode {
 		public void FadeOutAndRemove()
 		{
 			InvokeOnMainThread( delegate { 
-			Console.WriteLine ("Fade out loading screen...");
+				Console.WriteLine ("Fade out loading screen...");
 				UIView.BeginAnimations("FadeOutLoadingView");
 				UIView.SetAnimationDuration(0.3f);
 				UIView.SetAnimationTransition(UIViewAnimationTransition.None, this, true);

@@ -54,7 +54,7 @@ namespace prode.domain
 			AppManager.Current.OnNetworkUsageEnded();
 		}
 		
-		public void SubmitCard(string data) {
+		public void SubmitCard(Card card) {
 			if (!AppManager.Current.ConfirmNetworkIsAvailable())
 				return;
 
@@ -65,7 +65,7 @@ namespace prode.domain
 			
 			var client = new WebClientProxy();
 			client.OnHttpPostCompleted += _HttpPostCompleted;
-			client.HttpPostAsync(url, data);
+			client.HttpPostAsync(url, card.ToJson());
 		}
 
 		private void _HttpPostCompleted(List<string> errors) {
@@ -73,7 +73,6 @@ namespace prode.domain
 				_HandleError(errors);
 			else {
 				Console.WriteLine("Card submitted!");
-				//TODO: update Repository cards
 			}
 			AppManager.Current.OnNetworkUsageEnded();
 		}

@@ -41,13 +41,15 @@ namespace prode
 				_BuildLabel(new RectangleF(5, verticalOffset, 100, 24), match.HomeTeam, UIColor.Clear, false),
 				new FrameView() { StrokeColor = UIColor.Gray, Frame = new RectangleF(110-2, verticalOffset, 25+4, 24)},
 				_BuildTextField(new RectangleF(110, verticalOffset+2, 25, 24-4),
-				               (match.HomeUserScore.HasValue) ? match.HomeUserScore.Value.ToString() : ""),
+				               (match.HomeUserScore.HasValue) ? match.HomeUserScore.Value.ToString() : "",
+				               match.MatchId, true),
 				_BuildLabel(new RectangleF(140, verticalOffset, 40, 24), 
 				            string.Format("{0}-{1}", homeRealScore, guestRealScore), 
 				            UIColor.FromRGBA(222/255f, 222/255f, 225/255f, 0.25f), true),
 				new FrameView() { StrokeColor = UIColor.Gray, Frame = new RectangleF(185-2, verticalOffset, 25+4, 24)},
 				_BuildTextField(new RectangleF(185, verticalOffset+2, 25, 24-4),
-				               (match.GuestUserScore.HasValue) ? match.GuestUserScore.Value.ToString() : ""),
+				               (match.GuestUserScore.HasValue) ? match.GuestUserScore.Value.ToString() : "",
+				               match.MatchId, false),
 				_BuildLabel(new RectangleF(215, verticalOffset, 100, 24), match.GuestTeam, UIColor.Clear, false),
 			};
 		}
@@ -63,7 +65,7 @@ namespace prode
 			};		
 		}
 
-		private UITextField _BuildTextField(RectangleF frame, string text) {
+		private UITextField _BuildTextField(RectangleF frame, string text, int matchId, bool homeGame) {
 			var field = new UITextField {
 				KeyboardType = UIKeyboardType.NumberPad,
 				Text = text,
@@ -73,7 +75,14 @@ namespace prode
 				Font = UIFont.BoldSystemFontOfSize(14),
 				BackgroundColor = UIColor.White
 			};
-			field.EditingChanged += (sender, e) => ((UITextField)sender).ResignFirstResponder(); //also save the entry in a hash
+			field.EditingChanged += (sender, e) => {
+				((UITextField)sender).ResignFirstResponder();
+				var result = ((UITextField)sender).Text;
+				if (homeGame)
+					AppManager.Current.Repository.UpdateHomeResultForMatch(matchId, result);
+				else
+					AppManager.Current.Repository.UpdateGuestResultForMatch(matchId, result);
+			};
 			return field;
 		}
 	
