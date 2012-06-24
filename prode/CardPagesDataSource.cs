@@ -4,15 +4,17 @@ using System.Collections.Generic;
 using System.Drawing;
 using prode.domain;
 using MonoTouch.Dialog;
+using prode.domain.constants;
 
 namespace prode
 {
 	public class CardPagesDataSource : IPagedViewDataSource {
 		private List<Card> _cards;
-		private CardsViewController _controller;
+		//private CardsViewController _controller;
 
-		public CardPagesDataSource(CardsViewController controller, List<Card> cards) {
-			_controller = controller;
+		//public CardPagesDataSource(CardsViewController controller, List<Card> cards) {
+		public CardPagesDataSource(List<Card> cards) {
+			//_controller = controller;
 			_cards = cards;
 		}	
 		
@@ -43,9 +45,10 @@ namespace prode
 				submitCardButton.Font = UIFont.BoldSystemFontOfSize(14);
 				submitCardButton.Tapped += delegate {
 					//app could have been open for a while, and card might no longer be editable
-					if (_cards[i].IsEditable()) {
+					if (_cards[i].IsEditable())
 						AppManager.Current.CardsService.SubmitCard(_cards[i]);
-					}
+					else 
+						new UIAlertView(Constants.APP_TITLE, "La fecha ya ha cerrado.", null, "Ok").Show();
 				};
 				viewController.View.AddSubview(submitCardButton);
 			}
@@ -58,7 +61,7 @@ namespace prode
 
 				viewController.View.AddSubview(
 					new UILabel{
-						Text = string.Format("Fecha cerrada. Obtuviste 15 puntos!"),
+						Text = string.Format("Fecha cerrada. Obtuviste {0} puntos!", _cards[i].Points),
 						TextAlignment = UITextAlignment.Center,
 						Frame = new RectangleF(10,354,300,40),
 						TextColor = UIColor.White,

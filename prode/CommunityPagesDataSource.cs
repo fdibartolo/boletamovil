@@ -8,10 +8,11 @@ namespace prode
 {
 	public class CommunityPagesDataSource : IPagedViewDataSource {
 		private List<Community> _stats;
-		private CommunityViewController _controller;
+		//private CommunityViewController _controller;
 
-		public CommunityPagesDataSource(CommunityViewController controller, List<Community> communityStats) {
-			_controller = controller;
+		//public CommunityPagesDataSource(CommunityViewController controller, List<Community> communityStats) {
+		public CommunityPagesDataSource(List<Community> communityStats) {
+			//_controller = controller;
 			_stats = communityStats;
 		}	
 		

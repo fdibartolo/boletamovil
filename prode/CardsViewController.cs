@@ -58,7 +58,8 @@ namespace prode
 			
 			if (_pagedViewController == null) {
 				_pagedViewController = new PagedViewController{
-	    			PagedViewDataSource = new CardPagesDataSource(this, AppManager.Current.Repository.Cards)
+	    			//PagedViewDataSource = new CardPagesDataSource(this, AppManager.Current.Repository.Cards)
+	    			PagedViewDataSource = new CardPagesDataSource(AppManager.Current.Repository.Cards)
 				};
 			}
 		}

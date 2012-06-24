@@ -10,6 +10,7 @@ namespace prode.domain
 		public string WeekName { get; set; }
 		public string TournamentName { get; set; }
 		public string WeekDueDate { get; set; }
+		public int Points { get; set; }
 		public List<Match> Matches { get; set; }
 		
 		public static List<Card> BuildListOfFromJson(string jsonString) {
@@ -18,6 +19,7 @@ namespace prode.domain
 				{"week_name","WeekName"},	
 				{"tournament_name","TournamentName"},	
 				{"due_date","WeekDueDate"},	
+				{"points","Points"},	
 				{"matches","Matches"},
 				{"match_id","MatchId"},
 				{"home_team","HomeTeam"},
