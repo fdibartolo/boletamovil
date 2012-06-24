@@ -16,7 +16,7 @@ namespace prode
             base.Draw (rect);
              
             using (CGContext gctx = UIGraphics.GetCurrentContext()) {
-	            gctx.SetLineWidth(2);
+	            gctx.SetLineWidth(3);
 	            UIColor.Clear.SetFill();
 	            StrokeColor.SetStroke();
 	         

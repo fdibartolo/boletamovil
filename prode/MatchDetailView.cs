@@ -11,18 +11,24 @@ namespace prode
 			var homeRealScore = match.HomeRealScore.HasValue ? match.HomeRealScore.Value.ToString() : "";
 			var guestRealScore = match.GuestRealScore.HasValue ? match.GuestRealScore.Value.ToString() : "";
 			
+			UIColor[] homeResultColor = _GetColorForUserResult(match.HomeRealScore, match.HomeUserScore);
+			UIColor[] guestResultColor = _GetColorForUserResult(match.GuestRealScore, match.GuestUserScore);
+			UIColor[] gameResultColor = _GetColorForGameResult(match.HomeRealScore, match.HomeUserScore, match.GuestRealScore , match.GuestUserScore);
+			
 			return new UIView[] {
 				_BuildLabel(new RectangleF(5, verticalOffset, 100, 24), match.HomeTeam, UIColor.Clear, false),
+				new FrameView() { StrokeColor = homeResultColor[1], Frame = new RectangleF(110, verticalOffset, 25, 24)},
 				_BuildLabel(new RectangleF(110, verticalOffset, 25, 24), 
 				            (match.HomeUserScore.HasValue) ? match.HomeUserScore.Value.ToString() : "",
-				            _GetColorForUserResult(match.HomeRealScore, match.HomeUserScore), true),
+				            homeResultColor[0], true),
+				new FrameView() { StrokeColor = gameResultColor[1], Frame = new RectangleF(140, verticalOffset, 40, 24)},
 				_BuildLabel(new RectangleF(140, verticalOffset, 40, 24), 
 				            string.Format("{0}-{1}", homeRealScore, guestRealScore), 
-				            _GetColorForGameResult(match.HomeRealScore, match.HomeUserScore, match.GuestRealScore , match.GuestUserScore), 
-				            true),
+				            gameResultColor[0], true),
+				new FrameView() { StrokeColor = guestResultColor[1], Frame = new RectangleF(185, verticalOffset, 25, 24)},
 				_BuildLabel(new RectangleF(185, verticalOffset, 25, 24), 
 				            (match.GuestUserScore.HasValue) ? match.GuestUserScore.Value.ToString() : "", 
-				            _GetColorForUserResult(match.GuestRealScore, match.GuestUserScore), true),
+				            guestResultColor[0], true),
 				_BuildLabel(new RectangleF(215, verticalOffset, 100, 24), match.GuestTeam, UIColor.Clear, false)
 			};
 		}
@@ -33,18 +39,16 @@ namespace prode
 							
 			return new UIView[] {
 				_BuildLabel(new RectangleF(5, verticalOffset, 100, 24), match.HomeTeam, UIColor.Clear, false),
-				_BuildTextField(new RectangleF(110, verticalOffset, 25, 24),
+				new FrameView() { StrokeColor = UIColor.Gray, Frame = new RectangleF(110-2, verticalOffset, 25+4, 24)},
+				_BuildTextField(new RectangleF(110, verticalOffset+2, 25, 24-4),
 				               (match.HomeUserScore.HasValue) ? match.HomeUserScore.Value.ToString() : ""),
 				_BuildLabel(new RectangleF(140, verticalOffset, 40, 24), 
 				            string.Format("{0}-{1}", homeRealScore, guestRealScore), 
 				            UIColor.FromRGBA(222/255f, 222/255f, 225/255f, 0.25f), true),
-				_BuildTextField(new RectangleF(185, verticalOffset, 25, 24),
+				new FrameView() { StrokeColor = UIColor.Gray, Frame = new RectangleF(185-2, verticalOffset, 25+4, 24)},
+				_BuildTextField(new RectangleF(185, verticalOffset+2, 25, 24-4),
 				               (match.GuestUserScore.HasValue) ? match.GuestUserScore.Value.ToString() : ""),
 				_BuildLabel(new RectangleF(215, verticalOffset, 100, 24), match.GuestTeam, UIColor.Clear, false),
-//				new FrameView() {
-//						Frame = new RectangleF(140, verticalOffset, 40, 24),
-//						StrokeColor = UIColor.Red
-//					}
 			};
 		}
 		
@@ -73,25 +77,25 @@ namespace prode
 			return field;
 		}
 	
-		private UIColor _GetColorForUserResult(int? realScore, int? userScore) {
+		private UIColor[] _GetColorForUserResult(int? realScore, int? userScore) {
 			if ((!realScore.HasValue) || (!userScore.HasValue))
-				return UIColor.FromRGBA(100,0,0,0.5f);
+				return new UIColor[] { UIColor.FromRGBA(100,0,0,0.5f), UIColor.Red };
 			else if (realScore.Value == userScore.Value)
-				return UIColor.FromRGBA(0,100,0,0.3f);
+				return new UIColor[] { UIColor.FromRGBA(0,100,0,0.3f), UIColor.Green };
 			else
-				return UIColor.FromRGBA(100,0,0,0.5f);
+				return new UIColor[] { UIColor.FromRGBA(100,0,0,0.5f), UIColor.Red };
 		}
 
-		private UIColor _GetColorForGameResult(int? realHomeScore, int? userHomeScore, int? realGuestScore, int? userGuestScore) {
+		private UIColor[] _GetColorForGameResult(int? realHomeScore, int? userHomeScore, int? realGuestScore, int? userGuestScore) {
 			if ((!realHomeScore.HasValue) || (!userHomeScore.HasValue) 
 			    || (!realGuestScore.HasValue) || (!userGuestScore.HasValue))
-				return UIColor.FromRGBA(100,0,0,0.5f);
+				return new UIColor[] { UIColor.FromRGBA(100,0,0,0.5f), UIColor.Red };
 			else if (((realHomeScore.Value > realGuestScore.Value) && (userHomeScore.Value > userGuestScore.Value))
 				|| ((realHomeScore.Value == realGuestScore.Value) && (userHomeScore.Value == userGuestScore.Value))
 				|| ((realHomeScore.Value < realGuestScore.Value) && (userHomeScore.Value < userGuestScore.Value)))
-				return UIColor.FromRGBA(0,100,0,0.3f);
+				return new UIColor[] { UIColor.FromRGBA(0,100,0,0.3f), UIColor.Green };
 			else
-				return UIColor.FromRGBA(100,0,0,0.5f);
+				return new UIColor[] { UIColor.FromRGBA(100,0,0,0.5f), UIColor.Red };
 		}
 	}
 }

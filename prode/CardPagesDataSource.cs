@@ -50,14 +50,7 @@ namespace prode
 				foreach (var match in _cards[i].Matches) {
 					var matches = matchDetailView.BuildForReadOnly(match, verticalOffset);
 					verticalOffset += 28;
-					
 					viewController.View.AddSubviews(matches);
-				
-//					DrawingBrush rectangle = new DrawingBrush() {
-//						Frame = new RectangleF(140, verticalOffset, 40, 24),
-//						StrokeColor = UIColor.Red
-//					};
-//					viewController.View.AddSubview(rectangle);
 				}			
 
 				viewController.View.AddSubview(
