@@ -22,13 +22,16 @@ namespace prode
 			//InvokeOnMainThread(()=>{
 				_ResignKeyboardIfNeeded();	
 			//});
-			if (AppManager.Current.ConfirmNetworkIsAvailable()) {
-				AppManager.Current.CardsService.OnGetCardsCompleted += delegate {
-					ReloadPages();
-					this.ReloadComplete();
-				};
-				AppManager.Current.CardsService.GetCardsAsync();
+			if (!AppManager.Current.ConfirmNetworkIsAvailable()) {
+				this.ReloadComplete();
+				return;
 			}
+			
+			AppManager.Current.CardsService.OnGetCardsCompleted += delegate {
+				ReloadPages();
+				this.ReloadComplete();
+			};
+			AppManager.Current.CardsService.GetCardsAsync();
 		}
 		
 		private void _ResignKeyboardIfNeeded() {
