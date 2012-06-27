@@ -22,7 +22,35 @@ namespace prode
 		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
-			// Perform any additional setup after loading the view, typically from a nib.
+			View.BackgroundColor = UIColor.FromPatternImage(UIImage.FromFile("Default.png"));
+			
+			View.AddSubviews(
+				new UILabel{
+					Text = "Comunidad Prode",
+					TextAlignment = UITextAlignment.Center,
+					Frame = new RectangleF(0,0,320,60),
+					TextColor = UIColor.White,
+					Font = UIFont.BoldSystemFontOfSize(19),
+					BackgroundColor = UIColor.FromRGBA(222/255f, 222/255f, 225/255f, 0.25f)
+				},
+				new UILabel{
+					Text = "todavía no sos usuario?",
+					TextAlignment = UITextAlignment.Center,
+					Frame = new RectangleF(0,235,320,20),
+					TextColor = UIColor.White,
+					Font = UIFont.BoldSystemFontOfSize(13),
+					BackgroundColor = UIColor.Clear
+				},
+				new UILabel{
+					Text = "registrate en www.comunidadprode.com.ar!",
+					TextAlignment = UITextAlignment.Center,
+					Frame = new RectangleF(0,255,320,20),
+					TextColor = UIColor.White,
+					Font = UIFont.BoldSystemFontOfSize(13),
+					BackgroundColor = UIColor.Clear
+				}
+			);
+
 		}
 		
 		public override void ViewDidUnload ()
