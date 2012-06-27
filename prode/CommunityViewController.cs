@@ -20,11 +20,13 @@ namespace prode
 		}
 
 		private void _HandleRefreshRequested (object sender, EventArgs e) {
-			AppManager.Current.CommunityService.OnGetCommunityStatsCompleted += delegate {
-				ReloadPages();
-				this.ReloadComplete();
-			};
-			AppManager.Current.CommunityService.GetCommunityStatsAsync();
+			if (AppManager.Current.ConfirmNetworkIsAvailable()) {
+				AppManager.Current.CommunityService.OnGetCommunityStatsCompleted += delegate {
+					ReloadPages();
+					this.ReloadComplete();
+				};
+				AppManager.Current.CommunityService.GetCommunityStatsAsync();
+			}
 		}
 		
 		public override void DidReceiveMemoryWarning ()
