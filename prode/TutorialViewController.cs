@@ -21,18 +21,70 @@ namespace prode
 			base.ViewDidLoad ();
 			View.BackgroundColor = UIColor.FromPatternImage(UIImage.FromFile("Default.png"));
 						
-			View.AddSubview(
+			View.AddSubviews(
 				new UILabel{
-					Text = "Tutoriallllll",
+					Text = "Bienvenido a ComunidadProde!",
 					TextAlignment = UITextAlignment.Center,
-					Frame = new RectangleF(15,40,290,80),
+					Frame = new RectangleF(10,20,300,20),
+					Lines = 2,
+					TextColor = UIColor.White,
+					Font = UIFont.BoldSystemFontOfSize(18),
+					BackgroundColor = UIColor.Clear
+				},
+				new UILabel{
+					Text = "Para comenzar a jugar, simplemente andá a www.comunidadprode.com.ar, y elegí el torneo que mas te guste.",
+					TextAlignment = UITextAlignment.Center,
+					Frame = new RectangleF(10,80,300,60),
 					Lines = 3,
 					TextColor = UIColor.White,
-					Font = UIFont.SystemFontOfSize(18),
+					Font = UIFont.SystemFontOfSize(16),
 					BackgroundColor = UIColor.Clear
-			});
+				},
+				new UILabel{
+					Text = "Encotranos en las redes sociales, y compartí con nosotros tus ideas!",
+					TextAlignment = UITextAlignment.Center,
+					Frame = new RectangleF(10,160,300,40),
+					Lines = 2,
+					TextColor = UIColor.White,
+					Font = UIFont.SystemFontOfSize(16),
+					BackgroundColor = UIColor.Clear
+				},
+				new UILabel{
+					Text = "@comunidadprode",
+					TextAlignment = UITextAlignment.Center,
+					Frame = new RectangleF(10,230,300,20),
+					TextColor = UIColor.White,
+					Font = UIFont.BoldSystemFontOfSize(18),
+					BackgroundColor = UIColor.Clear
+				},
+				new UILabel{
+					Text = "facebook.com/comunidadprode",
+					TextAlignment = UITextAlignment.Center,
+					Frame = new RectangleF(10,270,300,20),
+					TextColor = UIColor.White,
+					Font = UIFont.BoldSystemFontOfSize(18),
+					BackgroundColor = UIColor.Clear
+				},
+				new UILabel{
+					Text = "comunidadprode@gmail.com",
+					TextAlignment = UITextAlignment.Center,
+					Frame = new RectangleF(10,310,300,20),
+					TextColor = UIColor.White,
+					Font = UIFont.BoldSystemFontOfSize(18),
+					BackgroundColor = UIColor.Clear
+				},
+				new UILabel{
+					Text = "No te olvides de avisarle a tus amigos!!",
+					TextAlignment = UITextAlignment.Center,
+					Frame = new RectangleF(10,340,300,40),
+					Lines = 2,
+					TextColor = UIColor.White,
+					Font = UIFont.SystemFontOfSize(16),
+					BackgroundColor = UIColor.Clear
+				}
+			);
 			
-			var logoutButton = new GlassButton(new RectangleF (10, 390, 300, 40)) {
+			var logoutButton = new GlassButton(new RectangleF (10, 410, 300, 40)) {
      			NormalColor = UIColor.FromRGBA(222/255f, 222/255f, 225/255f, 0.25f),
      			HighlightedColor = UIColor.Black
  			};
