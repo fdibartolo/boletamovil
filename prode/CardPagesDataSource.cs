@@ -10,6 +10,8 @@ namespace prode
 {
 	public class CardPagesDataSource : IPagedViewDataSource {
 		private List<Card> _cards;
+		private UIScrollView _scrollView;
+		
 		//private CardsViewController _controller;
 
 		//public CardPagesDataSource(CardsViewController controller, List<Card> cards) {
@@ -21,10 +23,17 @@ namespace prode
 	    public int Pages { get { return _cards.Count ; } }
 	
 	    public UIViewController GetPage(int i){
-	        UIViewController viewController = new UIViewController();
+	        UIViewController viewController = new ScrollableViewController();
 			viewController.View.BackgroundColor = UIColor.FromPatternImage(UIImage.FromFile("Default.png"));
 
-	        viewController.View.AddSubview(new CardView(_cards[i]));
+			_scrollView = new UIScrollView()
+			{
+				Frame = new RectangleF(0,0,320,480),
+				ContentSize = new SizeF(320, 480),
+                ScrollEnabled = true
+			};
+			
+	        _scrollView.AddSubview(new CardView(_cards[i]));
 			
 			var matchDetailView = new MatchDetailView();
 			int verticalOffset = 68;
@@ -34,7 +43,7 @@ namespace prode
 					var matches = matchDetailView.BuildForEdit(match, verticalOffset);
 					verticalOffset += 28;
 					
-					viewController.View.AddSubviews(matches);
+					_scrollView.AddSubviews(matches);
 				}			
 				
 				var submitCardButton = new GlassButton(new RectangleF (10, 354, 300, 40)) {
@@ -50,16 +59,16 @@ namespace prode
 					else 
 						new UIAlertView(Constants.APP_TITLE, "La fecha ya ha cerrado.", null, "Ok").Show();
 				};
-				viewController.View.AddSubview(submitCardButton);
+				_scrollView.AddSubview(submitCardButton);
 			}
 			else {
 				foreach (var match in _cards[i].Matches) {
 					var matches = matchDetailView.BuildForReadOnly(match, verticalOffset);
 					verticalOffset += 28;
-					viewController.View.AddSubviews(matches);
+					_scrollView.AddSubviews(matches);
 				}			
 
-				viewController.View.AddSubview(
+				_scrollView.AddSubview(
 					new UILabel{
 						Text = string.Format("Fecha cerrada. Obtuviste {0} puntos!", _cards[i].Points),
 						TextAlignment = UITextAlignment.Center,
@@ -70,6 +79,7 @@ namespace prode
 				});
 			}
 
+			viewController.View.AddSubview(_scrollView);
 	        return viewController;
 	    }
 

@@ -118,6 +118,8 @@
     <Compile Include="TutorialViewController.cs" />
     <Compile Include="MatchDetailView.cs" />
     <Compile Include="Util\FrameView.cs" />
+    <Compile Include="ScrollableViewController.cs" />
+    <Compile Include="Util\ViewExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="LoginViewController.xib" />
