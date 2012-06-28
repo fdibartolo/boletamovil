@@ -23,6 +23,8 @@ namespace prode.domain
 			int score;
 			if (Int32.TryParse(result, out score))
 				match.HomeUserScore = score;
+			else
+				match.HomeUserScore = null;
 		}
 
 		public void UpdateGuestResultForMatch (int matchId, string result)
@@ -38,6 +40,8 @@ namespace prode.domain
 			int score;
 			if (Int32.TryParse(result, out score))
 				match.GuestUserScore = score;
+			else
+				match.GuestUserScore = null;
 		}
 	}
 }

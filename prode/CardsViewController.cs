@@ -69,20 +69,6 @@ namespace prode
 			}
 		}
 		
-//		public override void ViewDidLoad ()
-//		{
-//			base.ViewDidLoad ();
-//
-//			var postButton = UIButton.FromType(UIButtonType.RoundedRect);
-//			postButton.Frame = new RectangleF(10, 260, 300, 40);
-//			postButton.SetTitle("Submit Sample Card", UIControlState.Normal);
-//			postButton.TouchUpInside += delegate(object sender, EventArgs e) {
-//				var sampleData = "{\"card\":{\"week_id\":1,\"matches\":[{\"match_id\":1,\"home_score\":8, \"guest_score\":6},{\"match_id\":2,\"home_score\":7, \"guest_score\":0}]}}";
-//				AppManager.Current.CardsService.SubmitCard(sampleData);
-//			};
-//			View.AddSubview(postButton);
-//		}
-		
 		public override void ViewWillAppear (bool animated) {
 			base.ViewWillAppear (animated);
 			View.AddSubview(_pagedViewController.View);
