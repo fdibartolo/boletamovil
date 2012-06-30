@@ -12,14 +12,8 @@ namespace prode.domain
 
 		public void UpdateHomeResultForMatch (int matchId, string result)
 		{
-			if (string.IsNullOrEmpty(result))
-				return;
-			
-			var match = (from c in Cards
-							from m in c.Matches
-							where (m.MatchId == matchId)
-							select m).FirstOrDefault();
-			
+			var match = _FindMatchById(matchId);
+
 			int score;
 			if (Int32.TryParse(result, out score))
 				match.HomeUserScore = score;
@@ -29,19 +23,21 @@ namespace prode.domain
 
 		public void UpdateGuestResultForMatch (int matchId, string result)
 		{
-			if (string.IsNullOrEmpty(result))
-				return;
-
-			var match = (from c in Cards
-							from m in c.Matches
-							where (m.MatchId == matchId)
-							select m).FirstOrDefault();
+			var match = _FindMatchById(matchId);
 
 			int score;
 			if (Int32.TryParse(result, out score))
 				match.GuestUserScore = score;
 			else
 				match.GuestUserScore = null;
+		}
+
+		private Match _FindMatchById (int id)
+		{
+			return (from c in Cards
+						from m in c.Matches
+						where (m.MatchId == id)
+						select m).FirstOrDefault();
 		}
 	}
 }
