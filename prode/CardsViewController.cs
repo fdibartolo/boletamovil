@@ -10,7 +10,7 @@ namespace prode
 	public partial class CardsViewController : DialogViewController
 	{
 		private PagedViewController _pagedViewController;
-
+		
 		public CardsViewController () : base (new RootElement (String.Empty), true)
 		{
 			Title = NSBundle.MainBundle.LocalizedString ("Mis Tarjetas", "MisTarjetas");
@@ -20,7 +20,7 @@ namespace prode
 
 		private void _HandleRefreshRequested (object sender, EventArgs e) {
 			//InvokeOnMainThread(()=>{
-				_ResignKeyboardIfNeeded();	
+			//	_ResignKeyboardIfNeeded();	
 			//});
 			if (!AppManager.Current.ConfirmNetworkIsAvailable()) {
 				this.ReloadComplete();
@@ -34,19 +34,19 @@ namespace prode
 			AppManager.Current.CardsService.GetCardsAsync();
 		}
 		
-		private void _ResignKeyboardIfNeeded() {
-			Console.WriteLine ("Dismissing keyboard");
-		    foreach (var item in this) {
-		        var tf = item as UITextField;
-		        if (tf != null && tf.IsFirstResponder) {
-					Console.WriteLine ("textfield with keyb found"); //BUG: no encuentra ninguno
-		            tf.ResignFirstResponder ();
-				}
-		    }
-		}
-
+//		private void _ResignKeyboardIfNeeded() {
+//			Console.WriteLine ("Dismissing keyboard");
+//		    foreach (var item in this) {
+//		        var tf = item as UITextField;
+//		        if (tf != null && tf.IsFirstResponder) {
+//					Console.WriteLine ("textfield with keyb found"); //BUG: no encuentra ninguno
+//		            tf.ResignFirstResponder ();
+//				}
+//		    }
+//		}
+//
 		public override void ViewWillDisappear (bool animated) {
-			_ResignKeyboardIfNeeded();	
+			//_ResignKeyboardIfNeeded();	
 			base.ViewWillDisappear (animated);
 		}
 		
@@ -75,6 +75,10 @@ namespace prode
 			ReloadPages();
 		}
 		
+		public void ReloadPages() {
+			_pagedViewController.ReloadPages();	
+		}
+
 		public override void ViewDidUnload ()
 		{
 			base.ViewDidUnload ();
@@ -86,16 +90,12 @@ namespace prode
 			
 			ReleaseDesignerOutlets ();
 		}
-		
+
 		public override bool ShouldAutorotateToInterfaceOrientation (UIInterfaceOrientation toInterfaceOrientation)
 		{
 			// Return true for supported orientations
 			//return (toInterfaceOrientation != UIInterfaceOrientation.PortraitUpsideDown);
 			return false;
-		}
-
-		public void ReloadPages() {
-			_pagedViewController.ReloadPages();	
 		}
 	}
 }

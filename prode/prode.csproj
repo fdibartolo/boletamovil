@@ -132,6 +132,8 @@
     <Content Include="Images\Cards.png" />
     <Content Include="Images\Community.png" />
     <Content Include="Images\User.png" />
+    <Content Include="Images\DoneDown.png" />
+    <Content Include="Images\DoneUp.png" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

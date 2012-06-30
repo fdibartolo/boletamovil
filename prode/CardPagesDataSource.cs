@@ -26,13 +26,11 @@ namespace prode
 	        UIViewController viewController = new ScrollableViewController();
 			viewController.View.BackgroundColor = UIColor.FromPatternImage(UIImage.FromFile("Default.png"));
 
-			_scrollView = new UIScrollView()
-			{
+			_scrollView = new UIScrollView() {
 				Frame = new RectangleF(0,0,320,480),
 				ContentSize = new SizeF(320, 480),
                 ScrollEnabled = true
 			};
-			
 	        _scrollView.AddSubview(new CardView(_cards[i]));
 			
 			var matchDetailView = new MatchDetailView();

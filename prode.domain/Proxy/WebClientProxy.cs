@@ -27,7 +27,7 @@ namespace prode.domain
 				if (ex.Message.Contains("401"))
 					AppManager.Current.ShowMessage(Constants.APP_TITLE, Constants.ERROR_INVALID_CREDENTIALS);
 				else
-					AppManager.Current.ShowMessage(Constants.APP_TITLE, ex.Message);
+					AppManager.Current.ShowMessage(Constants.APP_TITLE, Constants.ERROR_GENERAL_MESSAGE);
 			}
 			return result;
 		}
@@ -44,7 +44,7 @@ namespace prode.domain
 				if (e.Error.Message.Contains("401"))
 					OnHttpGetCompleted(new List<string> { Constants.ERROR_INVALID_CREDENTIALS }, null);
 				else
-					OnHttpGetCompleted(new List<string> { e.Error.Message }, null);
+					OnHttpGetCompleted(new List<string> { Constants.ERROR_GENERAL_MESSAGE }, null);
 			}
 			else 
 				OnHttpGetCompleted(null, e.Result);
@@ -62,7 +62,7 @@ namespace prode.domain
 				if (e.Error.Message.Contains("401"))
 					OnHttpPostCompleted(new List<string> { Constants.ERROR_INVALID_CREDENTIALS });
 				else
-					OnHttpPostCompleted(new List<string> { e.Error.Message });
+					OnHttpPostCompleted(new List<string> { Constants.ERROR_GENERAL_MESSAGE });
 			}
 			else 
 				OnHttpPostCompleted(null);

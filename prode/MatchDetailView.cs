@@ -76,8 +76,10 @@ namespace prode
 				BackgroundColor = UIColor.White
 			};
 			field.EditingChanged += (sender, e) => {
-				((UITextField)sender).ResignFirstResponder();
 				var result = ((UITextField)sender).Text;
+				if (result != string.Empty)
+					((UITextField)sender).ResignFirstResponder();
+				
 				if (homeGame)
 					AppManager.Current.Repository.UpdateHomeResultForMatch(matchId, result);
 				else
