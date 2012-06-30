@@ -45,7 +45,6 @@ namespace prode
 			
 			if (_pagedViewController == null) {
 				_pagedViewController = new PagedViewController{
-	    			//PagedViewDataSource = new CommunityPagesDataSource(this, AppManager.Current.Repository.CommunityStats)
 	    			PagedViewDataSource = new CommunityPagesDataSource(AppManager.Current.Repository.CommunityStats)
 				};
 			}

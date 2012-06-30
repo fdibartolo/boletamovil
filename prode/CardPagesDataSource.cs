@@ -12,11 +12,7 @@ namespace prode
 		private List<Card> _cards;
 		private UIScrollView _scrollView;
 		
-		//private CardsViewController _controller;
-
-		//public CardPagesDataSource(CardsViewController controller, List<Card> cards) {
 		public CardPagesDataSource(List<Card> cards) {
-			//_controller = controller;
 			_cards = cards;
 		}	
 		
@@ -80,13 +76,6 @@ namespace prode
 			viewController.View.AddSubview(_scrollView);
 	        return viewController;
 	    }
-
-//	    void _HandleTouchUpInside(object sender, EventArgs e) {
-//			AppManager.Current.CardsService.OnGetCardsCompleted += delegate {
-//				_controller.ReloadPages();
-//			};
-//			AppManager.Current.CardsService.GetCardsAsync();
-//	    }
 
     	public void Reload(){
 			_cards = AppManager.Current.Repository.Cards;

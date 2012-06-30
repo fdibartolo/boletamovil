@@ -19,9 +19,6 @@ namespace prode
 		}
 
 		private void _HandleRefreshRequested (object sender, EventArgs e) {
-			//InvokeOnMainThread(()=>{
-			//	_ResignKeyboardIfNeeded();	
-			//});
 			if (!AppManager.Current.ConfirmNetworkIsAvailable()) {
 				this.ReloadComplete();
 				return;
@@ -34,19 +31,7 @@ namespace prode
 			AppManager.Current.CardsService.GetCardsAsync();
 		}
 		
-//		private void _ResignKeyboardIfNeeded() {
-//			Console.WriteLine ("Dismissing keyboard");
-//		    foreach (var item in this) {
-//		        var tf = item as UITextField;
-//		        if (tf != null && tf.IsFirstResponder) {
-//					Console.WriteLine ("textfield with keyb found"); //BUG: no encuentra ninguno
-//		            tf.ResignFirstResponder ();
-//				}
-//		    }
-//		}
-//
 		public override void ViewWillDisappear (bool animated) {
-			//_ResignKeyboardIfNeeded();	
 			base.ViewWillDisappear (animated);
 		}
 		
@@ -63,7 +48,6 @@ namespace prode
 			
 			if (_pagedViewController == null) {
 				_pagedViewController = new PagedViewController{
-	    			//PagedViewDataSource = new CardPagesDataSource(this, AppManager.Current.Repository.Cards)
 	    			PagedViewDataSource = new CardPagesDataSource(AppManager.Current.Repository.Cards)
 				};
 			}

@@ -8,11 +8,8 @@ namespace prode
 {
 	public class CommunityPagesDataSource : IPagedViewDataSource {
 		private List<Community> _stats;
-		//private CommunityViewController _controller;
 
-		//public CommunityPagesDataSource(CommunityViewController controller, List<Community> communityStats) {
 		public CommunityPagesDataSource(List<Community> communityStats) {
-			//_controller = controller;
 			_stats = communityStats;
 		}	
 		
@@ -26,13 +23,6 @@ namespace prode
 			
 	        return viewController;
 	    }
-
-//	    void _HandleTouchUpInside(object sender, EventArgs e) {
-//			AppManager.Current.CommunityService.OnGetCommunityStatsCompleted += delegate {
-//				_controller.ReloadPages();
-//			};
-//			AppManager.Current.CommunityService.GetCommunityStatsAsync();
-//	    }
 
     	public void Reload(){
 			_stats = AppManager.Current.Repository.CommunityStats;

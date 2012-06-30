@@ -4,6 +4,7 @@ using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 using prode.domain;
 using prode.domain.constants;
+using MonoTouch.Dialog;
 
 namespace prode
 {
@@ -51,8 +52,27 @@ namespace prode
 				}
 			);
 
+			var loginButton = new GlassButton(new RectangleF (50, 185, 220, 40)) {
+     			NormalColor = UIColor.FromRGBA(222/255f, 222/255f, 225/255f, 0.25f),
+     			HighlightedColor = UIColor.Black
+ 			};
+			loginButton.SetTitle("Ingresar", UIControlState.Normal);
+			loginButton.Font = UIFont.BoldSystemFontOfSize(14);
+			loginButton.Tapped += _Login;
+			View.AddSubview(loginButton);
+
+
 		}
-		
+
+		private void _Login(GlassButton obj) {
+			if ((string.IsNullOrEmpty(txtUsername.Text)) || (string.IsNullOrEmpty(txtPassword.Text))) {
+				new UIAlertView(Constants.APP_TITLE, "Tanto el usuario como la contraseña deben ser provistos", null, "Ok").Show();
+				return;
+			}
+			
+			AppManager.Current.Login(txtUsername.Text, txtPassword.Text);
+		}
+
 		public override void ViewDidUnload ()
 		{
 			base.ViewDidUnload ();
@@ -73,16 +93,6 @@ namespace prode
 			// Return true for supported orientations
 			//return (toInterfaceOrientation != UIInterfaceOrientation.PortraitUpsideDown);
 			return false;
-		}
-		
-		partial void Login (MonoTouch.UIKit.UIButton sender)
-		{
-			if ((string.IsNullOrEmpty(txtUsername.Text)) || (string.IsNullOrEmpty(txtPassword.Text))) {
-				new UIAlertView(Constants.APP_TITLE, "Tanto el usuario como la contraseña deben ser provistos", null, "Ok").Show();
-				return;
-			}
-			
-			AppManager.Current.Login(txtUsername.Text, txtPassword.Text);
 		}
 	}
 }

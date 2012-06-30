@@ -16,9 +16,6 @@ namespace prode
 
 		[Outlet]
 		MonoTouch.UIKit.UITextField txtPassword { get; set; }
-
-		[Action ("Login:")]
-		partial void Login (MonoTouch.UIKit.UIButton sender);
 		
 		void ReleaseDesignerOutlets ()
 		{
