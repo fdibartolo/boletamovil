@@ -67,7 +67,7 @@ namespace prode {
 			}
 		}
 		
-		public LoadingHUDView():this("Conectando", "Espere mientras se completa la comunicación"){}
+		public LoadingHUDView():this("Conectando", "Espere un momento por favor..."){}
 	
 		public LoadingHUDView(string title, string message) {
 			Title = title;

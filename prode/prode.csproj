@@ -56,8 +56,8 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
-    <CodesignKey>iPhone Developer: Fernando Di Bartolo (H29XXEQHSK)</CodesignKey>
-    <CodesignProvision>11E6FF4F-4C48-47DF-B4E8-0B62BA9A8711</CodesignProvision>
+    <CodesignKey>iPhone Developer</CodesignKey>
+    <CodesignProvision>ED24927F-085C-4FA5-861D-134575F50C6E</CodesignProvision>
     <IpaPackageName />
     <MtouchI18n />
   </PropertyGroup>

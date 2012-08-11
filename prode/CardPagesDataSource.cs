@@ -84,7 +84,7 @@ namespace prode
 
 				_scrollView.AddSubview(
 					new UILabel{
-						Text = "Fecha cerrada. Pronto sabras tus puntos!",
+						Text = "Fecha cerrada. Pronto sabrás tus puntos!",
 						TextAlignment = UITextAlignment.Center,
 						Frame = new RectangleF(10,354,300,40),
 						TextColor = UIColor.White,
