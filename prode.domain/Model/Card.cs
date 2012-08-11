@@ -10,6 +10,7 @@ namespace prode.domain
 		public string WeekName { get; set; }
 		public string TournamentName { get; set; }
 		public string WeekDueDate { get; set; }
+		public string WeekPublishDate { get; set; }
 		public int Points { get; set; }
 		public List<Match> Matches { get; set; }
 		
@@ -19,6 +20,7 @@ namespace prode.domain
 				{"week_name","WeekName"},	
 				{"tournament_name","TournamentName"},	
 				{"due_date","WeekDueDate"},	
+				{"publish_date","WeekPublishDate"},	
 				{"points","Points"},	
 				{"matches","Matches"},
 				{"match_id","MatchId"},
@@ -36,14 +38,16 @@ namespace prode.domain
 			return cards as List<Card>;
 		}
 
-		public bool IsEditable()
-		{
+		public bool IsEditable() {
 			DateTime dueDate;
 			return ((DateTime.TryParse(WeekDueDate, out dueDate)) && (dueDate > DateTime.Now));
 		}
 
-		public string ToJson()
-		{
+		public bool IsPublished() {
+			return (!string.IsNullOrEmpty(WeekPublishDate));
+		}
+
+		public string ToJson() {
 			var result = JsonConvert.SerializeObject(JsonCard.BuildFromCard(this));
 			return "{\"card\":" + result + "}";
 		}

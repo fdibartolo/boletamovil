@@ -7,7 +7,7 @@ using MonoTouch.Dialog;
 namespace prode
 {
 	public class MatchDetailView : UIView {
-		public UIView[] BuildForReadOnly(Match match, int verticalOffset) {
+		public UIView[] BuildForPublished(Match match, int verticalOffset) {
 			var homeRealScore = match.HomeRealScore.HasValue ? match.HomeRealScore.Value.ToString() : "";
 			var guestRealScore = match.GuestRealScore.HasValue ? match.GuestRealScore.Value.ToString() : "";
 			
@@ -33,6 +33,27 @@ namespace prode
 			};
 		}
 
+		public UIView[] BuildForReadOnly(Match match, int verticalOffset) {
+			var homeRealScore = match.HomeRealScore.HasValue ? match.HomeRealScore.Value.ToString() : "";
+			var guestRealScore = match.GuestRealScore.HasValue ? match.GuestRealScore.Value.ToString() : "";
+							
+			return new UIView[] {
+				_BuildLabel(new RectangleF(5, verticalOffset, 100, 24), match.HomeTeam, UIColor.Clear, false),
+				new FrameView() { StrokeColor = UIColor.Gray, Frame = new RectangleF(110-2, verticalOffset, 25+4, 24)},
+				_BuildLabel(new RectangleF(110, verticalOffset+2, 25, 24-4), 
+				            (match.HomeUserScore.HasValue) ? match.HomeUserScore.Value.ToString() : "",
+				            UIColor.White, true),
+				_BuildLabel(new RectangleF(140, verticalOffset, 40, 24), 
+				            string.Format("{0}-{1}", homeRealScore, guestRealScore), 
+				            UIColor.FromRGBA(222/255f, 222/255f, 225/255f, 0.25f), true),
+				new FrameView() { StrokeColor = UIColor.Gray, Frame = new RectangleF(185-2, verticalOffset, 25+4, 24)},
+				_BuildLabel(new RectangleF(185, verticalOffset+2, 25, 24-4), 
+				            (match.GuestUserScore.HasValue) ? match.GuestUserScore.Value.ToString() : "", 
+				            UIColor.White, true),
+				_BuildLabel(new RectangleF(215, verticalOffset, 100, 24), match.GuestTeam, UIColor.Clear, false),
+			};
+		}
+		
 		public UIView[] BuildForEdit(Match match, int verticalOffset) {
 			var homeRealScore = match.HomeRealScore.HasValue ? match.HomeRealScore.Value.ToString() : "";
 			var guestRealScore = match.GuestRealScore.HasValue ? match.GuestRealScore.Value.ToString() : "";
@@ -59,7 +80,7 @@ namespace prode
 				Text = text,
 				TextAlignment = UITextAlignment.Center,
 				Frame = frame,
-				TextColor = UIColor.White,
+				TextColor = (backgroundColor == UIColor.White) ? UIColor.Gray : UIColor.White,
 				Font = isBold ? UIFont.BoldSystemFontOfSize(14) : UIFont.SystemFontOfSize(14),
 				BackgroundColor = backgroundColor, 
 			};		

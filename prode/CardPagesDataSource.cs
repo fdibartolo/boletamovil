@@ -55,9 +55,9 @@ namespace prode
 				};
 				_scrollView.AddSubview(submitCardButton);
 			}
-			else {
+			else if (_cards[i].IsPublished()) {
 				foreach (var match in _cards[i].Matches) {
-					var matches = matchDetailView.BuildForReadOnly(match, verticalOffset);
+					var matches = matchDetailView.BuildForPublished(match, verticalOffset);
 					verticalOffset += 28;
 					_scrollView.AddSubviews(matches);
 				}			
@@ -69,6 +69,23 @@ namespace prode
 						Frame = new RectangleF(10,354,300,40),
 						TextColor = UIColor.White,
 						Font = UIFont.BoldSystemFontOfSize(17),
+						BackgroundColor = UIColor.Clear
+				});
+			}
+			else {
+				foreach (var match in _cards[i].Matches) {
+					var matches = matchDetailView.BuildForReadOnly(match, verticalOffset);
+					verticalOffset += 28;
+					_scrollView.AddSubviews(matches);
+				}			
+
+				_scrollView.AddSubview(
+					new UILabel{
+						Text = "Fecha cerrada. Pronto sabras tus puntos!",
+						TextAlignment = UITextAlignment.Center,
+						Frame = new RectangleF(10,354,300,40),
+						TextColor = UIColor.White,
+						Font = UIFont.BoldSystemFontOfSize(15),
 						BackgroundColor = UIColor.Clear
 				});
 			}

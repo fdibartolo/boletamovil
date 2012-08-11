@@ -47,6 +47,7 @@
     <CodesignKey>iPhone Developer</CodesignKey>
     <MtouchDebug>true</MtouchDebug>
     <MtouchProfiling>true</MtouchProfiling>
+    <IpaPackageName />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
     <DebugType>none</DebugType>
@@ -134,15 +135,24 @@
     <Content Include="Images\User.png" />
     <Content Include="Images\DoneDown.png" />
     <Content Include="Images\DoneUp.png" />
+    <Content Include="Icons\Logo57x57.png" />
+    <Content Include="Icons\Logo114x114.png" />
+    <Content Include="Icons\Logo29x29.png" />
+    <Content Include="Icons\Logo58x58.png" />
+    <Content Include="Icons\Logo512x512.png" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="domain\prode.domain.csproj">
+    <ProjectReference Include="..\prode.domain\prode.domain.csproj">
       <Project>{19DB8273-02C5-4131-B591-5D30135977AB}</Project>
       <Name>prode.domain</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Util\" />
+    <Folder Include="Icons\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ITunesArtwork Include="iTunesArtwork" />
   </ItemGroup>
 </Project>
