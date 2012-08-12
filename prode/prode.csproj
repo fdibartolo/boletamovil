@@ -140,6 +140,7 @@
     <Content Include="Icons\Logo29x29.png" />
     <Content Include="Icons\Logo58x58.png" />
     <Content Include="Icons\Logo512x512.png" />
+    <Content Include="Images\Arrow.png" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

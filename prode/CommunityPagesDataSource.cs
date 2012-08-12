@@ -20,7 +20,10 @@ namespace prode
 			viewController.View.BackgroundColor = UIColor.FromPatternImage(UIImage.FromFile("Default.png"));
 
 	        viewController.View.AddSubview(new RankingView(_stats[i]));
-			
+			viewController.View.AddSubview(new UIImageView() {
+				Frame = new RectangleF(5,0,16,30),
+				Image = UIImage.FromFile("Images/Arrow.png")
+			});
 	        return viewController;
 	    }
 
