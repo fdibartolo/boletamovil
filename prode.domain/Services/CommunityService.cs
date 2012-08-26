@@ -50,8 +50,8 @@ namespace prode.domain
 				Console.WriteLine("Community stats updated!");
 				var community = Community.BuildListOfFromJson(result);
 				AppManager.Current.Repository.CommunityStats = community;
-				OnGetCommunityStatsCompleted();
 			}			
+			OnGetCommunityStatsCompleted();
 			AppManager.Current.OnNetworkUsageEnded();
 		}
 	}

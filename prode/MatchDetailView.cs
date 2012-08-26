@@ -94,17 +94,26 @@ namespace prode
 				Frame = frame,
 				TextColor = UIColor.Black,
 				Font = UIFont.BoldSystemFontOfSize(14),
-				BackgroundColor = UIColor.White
+				BackgroundColor = UIColor.White,
+				Tag = homeGame ? matchId : matchId * -1
 			};
+
 			field.EditingChanged += (sender, e) => {
 				var result = ((UITextField)sender).Text;
-				if (result != string.Empty)
-					((UITextField)sender).ResignFirstResponder();
-				
+
 				if (homeGame)
 					AppManager.Current.Repository.UpdateHomeResultForMatch(matchId, result);
 				else
 					AppManager.Current.Repository.UpdateGuestResultForMatch(matchId, result);
+
+				if (result != string.Empty) {
+					var nextResponder = ((UITextField)sender).FindNextTextFieldResponder();
+					if (nextResponder != null) {
+						nextResponder.BecomeFirstResponder();
+						((UITextField)nextResponder).ShowDoneButtonOnKeyboard();
+					}
+				}
+
 			};
 			return field;
 		}

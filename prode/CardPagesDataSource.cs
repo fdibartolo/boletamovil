@@ -94,10 +94,10 @@ namespace prode
 			}
 
 			viewController.View.AddSubview(_scrollView);
-			viewController.View.AddSubview(new UIImageView() {
-				Frame = new RectangleF(5,0,16,30),
-				Image = UIImage.FromFile("Images/Arrow.png")
-			});
+//			viewController.View.AddSubview(new UIImageView() {
+//				Frame = new RectangleF(5,0,16,30),
+//				Image = UIImage.FromFile("Images/Arrow.png")
+//			});
 	        return viewController;
 	    }
 

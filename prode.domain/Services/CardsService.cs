@@ -49,8 +49,8 @@ namespace prode.domain
 			else {
 				Console.WriteLine("Cards updated!");
 				AppManager.Current.Repository.Cards = Card.BuildListOfFromJson(result);
-				OnGetCardsCompleted();
 			}
+			OnGetCardsCompleted();
 			AppManager.Current.OnNetworkUsageEnded();
 		}
 		

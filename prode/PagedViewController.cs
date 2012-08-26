@@ -20,6 +20,8 @@ namespace prode
 		public PagedViewController() {
 			_scrollView.DecelerationEnded += HandleScrollViewDecelerationEnded;
 			_pageControl.ValueChanged += HandlePageControlValueChanged;
+
+			_scrollView.DraggingStarted += HandleScrollViewDraggingStarted; 
 		}
            
 		private int _page;
@@ -43,7 +45,13 @@ namespace prode
 		void HandlePageControlValueChanged (object sender, EventArgs e) {
 			Page = _pageControl.CurrentPage;
 		}
-           
+
+		void HandleScrollViewDraggingStarted(object sender, EventArgs e) {
+			var firstResponder = this.View.FindFirstResponder ();
+			if (firstResponder != null)
+				firstResponder.ResignFirstResponder ();
+		}
+
 		public void ReloadPages() {
 			PagedViewDataSource.Reload();
                  

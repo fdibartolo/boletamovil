@@ -80,16 +80,13 @@ namespace prode
 				}
 		}
 		
-		public void ShowMessage (string title, string message)
-		{
+		public void ShowMessage(string title, string message) {
 			InvokeOnMainThread(()=>{
-				var popup = new UIAlertView(title, message, null, "OK" ,null);
-				popup.Show();
+				new UIAlertView(title, message, null, "OK" ,null).Show();
 			});
 		}
 		
 		public void ApplicationStartUpMode(AppMode mode) {
-			
 			switch (mode) {
 				case AppMode.Login:
 					Console.WriteLine("Launching login mode...");

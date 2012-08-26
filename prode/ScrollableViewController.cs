@@ -41,7 +41,7 @@ namespace prode
 		    if (activeView == null)
 		        return;
 
-			_HandleDoneButtonOnKeyboard((UITextField)activeView);
+			((UITextField)activeView).ShowDoneButtonOnKeyboard();
 
 		    UIScrollView scrollView = activeView.FindSuperviewOfType(this.View, typeof(UIScrollView)) as UIScrollView;
 		    if (scrollView == null)
@@ -66,7 +66,7 @@ namespace prode
 		        scrollView.SetContentOffset(scrollPoint, true);
 		    }
 		}
-		 
+
 		protected virtual void KeyboardWillHideNotification (NSNotification notification) {
 		    UIView activeView = KeyboardGetActiveView();
 		    if (activeView == null)
@@ -84,30 +84,6 @@ namespace prode
 		        scrollView.ScrollIndicatorInsets = contentInsets;
 		    });
 		}	
-		
-		private void _HandleDoneButtonOnKeyboard(UITextField textFieldFirstResponder){  
-			var keyboard = ViewExtensions.GetKeyBoardView();
-			UIButton doneButton = UIButton.FromType(UIButtonType.Custom);
-			doneButton.Frame = new RectangleF(0,163,106,53);
-			doneButton.AdjustsImageWhenHighlighted = false;
-			doneButton.SetImage(UIImage.FromFile("Images/DoneUp.png"),UIControlState.Normal);
-			doneButton.SetImage(UIImage.FromFile("Images/DoneDown.png"),UIControlState.Highlighted);
-			doneButton.TouchUpInside += delegate(object sender, EventArgs e) {
-				textFieldFirstResponder.ResignFirstResponder();	
-			};
-			
-			textFieldFirstResponder.EditingDidEnd += delegate(object sender, EventArgs e) { 
-				// This doubles every time notification posts... need to only add once
-				if(doneButton != null){
-					doneButton.RemoveFromSuperview();
-					doneButton = null;
-				}
-			};
-			
-			if(keyboard != null) {
-				keyboard.AddSubview(doneButton);
-			}
-		}
 	}
 }
 
