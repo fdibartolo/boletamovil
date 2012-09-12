@@ -9,6 +9,8 @@ namespace prode
 {
 	public partial class UserViewController : UIViewController
 	{
+		private UILabel _nameLabel, _nicknameLabel;
+
 		public UserViewController () : base ("UserViewController", null)
 		{
 			Title = NSBundle.MainBundle.LocalizedString ("Mi Cuenta", "MiCuenta");
@@ -27,26 +29,24 @@ namespace prode
 		{
 			base.ViewDidLoad ();
 			View.BackgroundColor = UIColor.FromPatternImage(UIImage.FromFile("Default.png"));
-						
-			View.AddSubview(
-				new UILabel{
-					Text = AppManager.Current.Repository.User.FormattedName,
-					TextAlignment = UITextAlignment.Right,
-					Frame = new RectangleF(10,20,300,40),
-					TextColor = UIColor.White,
-					Font = UIFont.BoldSystemFontOfSize(24),
-					BackgroundColor = UIColor.Clear
-			});
 
-			View.AddSubview(
-				new UILabel{
-					Text = string.Format("({0})", AppManager.Current.Repository.User.NickName),
-					TextAlignment = UITextAlignment.Right,
-					Frame = new RectangleF(10,50,300,20),
-					TextColor = UIColor.White,
-					Font = UIFont.BoldSystemFontOfSize(14),
-					BackgroundColor = UIColor.Clear
-			});
+			_nameLabel = new UILabel{
+				TextAlignment = UITextAlignment.Right,
+				Frame = new RectangleF(10,20,300,40),
+				TextColor = UIColor.White,
+				Font = UIFont.BoldSystemFontOfSize(24),
+				BackgroundColor = UIColor.Clear
+			};
+			View.AddSubview(_nameLabel);
+
+			_nicknameLabel = new UILabel{
+				TextAlignment = UITextAlignment.Right,
+				Frame = new RectangleF(10,50,300,20),
+				TextColor = UIColor.White,
+				Font = UIFont.BoldSystemFontOfSize(14),
+				BackgroundColor = UIColor.Clear
+			};
+			View.AddSubview(_nicknameLabel);
 
 			var logoutButton = new GlassButton(new RectangleF (10, 360, 300, 40)) {
      			NormalColor = UIColor.FromRGBA(222/255f, 222/255f, 225/255f, 0.25f),
@@ -70,7 +70,14 @@ namespace prode
 //					BackgroundColor = UIColor.Clear
 //			});
 		}
-		
+
+		public override void ViewWillAppear (bool animated)
+		{
+			_nameLabel.Text = AppManager.Current.Repository.User.FormattedName;
+			_nicknameLabel.Text = string.Format("({0})", AppManager.Current.Repository.User.NickName);
+
+			base.ViewWillAppear (animated);
+		}
 		public override void ViewDidUnload ()
 		{
 			base.ViewDidUnload ();

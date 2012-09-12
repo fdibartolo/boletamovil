@@ -60,8 +60,6 @@ namespace prode
 			loginButton.Font = UIFont.BoldSystemFontOfSize(14);
 			loginButton.Tapped += _Login;
 			View.AddSubview(loginButton);
-
-
 		}
 
 		private void _Login(GlassButton obj) {
@@ -73,8 +71,7 @@ namespace prode
 			AppManager.Current.Login(txtUsername.Text, txtPassword.Text);
 		}
 
-		public override void ViewDidUnload ()
-		{
+		public override void ViewDidUnload () {
 			base.ViewDidUnload ();
 			txtUsername.Dispose();
 			txtPassword.Dispose();
@@ -82,8 +79,7 @@ namespace prode
 			ReleaseDesignerOutlets ();
 		}
 		
-		public override void ViewWillAppear (bool animated)
-		{
+		public override void ViewWillAppear (bool animated) {
 			base.ViewWillAppear (animated);
 			txtPassword.Text = string.Empty;
 		}

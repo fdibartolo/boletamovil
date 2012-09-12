@@ -71,7 +71,7 @@ namespace prode.domain
 			else {
 				Console.WriteLine("Login success!");
 				UserStore.SaveUser(user);
-				Repository.User = user.Sanitize(); //so we dont keep pwd in memory
+				Repository.User = user; //.Sanitize(); //so we dont keep pwd in memory
 				mode = user.Newbie ? AppMode.Newbie : AppMode.Tabs;
 			}
 			
