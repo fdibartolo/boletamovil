@@ -69,12 +69,11 @@ namespace prode.domain
 		}
 
 		private void _HttpPostCompleted(List<string> errors) {
+			AppManager.Current.OnNetworkUsageEnded();
 			if (errors != null)
 				_HandleError(errors);
-			else {
-				Console.WriteLine("Card submitted!");
-			}
-			AppManager.Current.OnNetworkUsageEnded();
+			else
+				AppManager.Current.ShowMessage(Constants.APP_TITLE, "Tu tarjeta fue guardada correctamente!");
 		}
 	}
 }

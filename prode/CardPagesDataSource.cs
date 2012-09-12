@@ -49,7 +49,11 @@ namespace prode
 	 			};
 				submitCardButton.SetTitle("Guardar Tarjeta", UIControlState.Normal);
 				submitCardButton.Font = UIFont.BoldSystemFontOfSize(14);
-				submitCardButton.Tapped += delegate {
+				submitCardButton.Tapped += delegate(GlassButton button) {
+					var firstResponder = button.Superview.FindFirstResponder();
+					if (firstResponder != null)
+						firstResponder.ResignFirstResponder();
+
 					//app could have been open for a while, and card might no longer be editable
 					if (card.IsEditable())
 						AppManager.Current.CardsService.SubmitCard(card);
