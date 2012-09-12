@@ -104,6 +104,7 @@ namespace prode
 					AppManager.Current.CardsService.GetCards(); //sync call
 
 					var tabBarController = new UITabBarController();
+					//tabBarController.Delegate = new ProdeTabBarDelegate(this);
 					tabBarController.ViewControllers = new UIViewController [] {
 						_communityViewController,
 						_cardsViewController,
@@ -130,6 +131,25 @@ namespace prode
 			foreach (var view in window.Subviews){
 	        	view.RemoveFromSuperview();
 			}
+		}
+	}
+
+	public class ProdeTabBarDelegate : UITabBarControllerDelegate {
+		private UIClient _uiClient;
+		public ProdeTabBarDelegate(UIClient client) {
+			_uiClient = client;			
+		}
+
+		public override bool ShouldSelectViewController (UITabBarController tabBarController, UIViewController viewController) {
+			Console.WriteLine("should select");
+
+			_uiClient.NetworkUsageStarted(true, "Cargando");
+			return true;
+		}
+
+		public override void ViewControllerSelected (UITabBarController tabBarController, UIViewController viewController) {
+			_uiClient.NetworkUsageEnded();
+			Console.WriteLine("vc selected");
 		}
 	}
 }

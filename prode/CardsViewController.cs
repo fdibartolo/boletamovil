@@ -31,10 +31,6 @@ namespace prode
 			AppManager.Current.CardsService.GetCardsAsync();
 		}
 		
-		public override void ViewWillDisappear (bool animated) {
-			base.ViewWillDisappear (animated);
-		}
-		
 		public override void DidReceiveMemoryWarning ()
 		{
 			// Releases the view if it doesn't have a superview.
@@ -45,7 +41,7 @@ namespace prode
 		
 		public override void ViewDidLoad() {
 			base.ViewDidLoad ();
-			
+
 			if (_pagedViewController == null) {
 				_pagedViewController = new PagedViewController{
 	    			PagedViewDataSource = new CardPagesDataSource(AppManager.Current.Repository.Cards)
