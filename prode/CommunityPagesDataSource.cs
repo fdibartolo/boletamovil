@@ -18,8 +18,8 @@ namespace prode
 	    public UIViewController GetPage(int i){
 	        UIViewController viewController = new UIViewController();
 			viewController.View.BackgroundColor = UIColor.FromPatternImage(UIImage.FromFile("Default.png"));
+			viewController.View.AddSubview(new RankingView(_stats[i]));
 
-	        viewController.View.AddSubview(new RankingView(_stats[i]));
 //			viewController.View.AddSubview(new UIImageView() {
 //				Frame = new RectangleF(3,-5,15,29),
 //				Image = UIImage.FromFile("Images/Arrow.png")

@@ -57,7 +57,7 @@ namespace prode
                  
 			foreach (var p in _pages)
 				p.View.RemoveFromSuperview();
-                 
+
 				int i;
 				var numberOfPages = PagedViewDataSource.Pages;
 				for (i=0; i<numberOfPages; i++) {
@@ -70,9 +70,9 @@ namespace prode
 				_scrollView.ContentSize = new SizeF(320*(i==0?1:i), 400);
 				_pageControl.Pages = i;
 				_pageControl.CurrentPage = 0;
-                 
-				PagedViewDataSource.Reload();
 				_pages[0].ViewDidAppear(true);
+                 
+				//PagedViewDataSource.Reload();
 			}
            
 		public override void ViewDidLoad () {

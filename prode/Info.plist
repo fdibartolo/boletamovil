@@ -10,7 +10,10 @@
 		<string>Icons/Logo114x114.png</string>
 		<string>Icons/Logo29x29.png</string>
 		<string>Icons/Logo58x58.png</string>
+		<string>Icons/Logo72x72.png</string>
 	</array>
+	<key>CFBundleIdentifier</key>
+	<string>com.fdibartolo.prode</string>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
 	<key>MinimumOSVersion</key>

@@ -90,8 +90,8 @@ namespace prode
 			switch (mode) {
 				case AppMode.Login:
 					Console.WriteLine("Launching login mode...");
-					_loginViewController.View.Frame = new System.Drawing.RectangleF(0,20,320,460);
 					InvokeOnMainThread(()=>{
+						_loginViewController.View.Frame = new System.Drawing.RectangleF(0,20,320,460);
 						_RemoveAllSubviews();
 						window.AddSubview(_loginViewController.View);
 					});
@@ -103,14 +103,14 @@ namespace prode
 					AppManager.Current.CommunityService.GetCommunityStats(); //sync call
 					AppManager.Current.CardsService.GetCards(); //sync call
 
-					var tabBarController = new UITabBarController();
-					//tabBarController.Delegate = new ProdeTabBarDelegate(this);
-					tabBarController.ViewControllers = new UIViewController [] {
-						_communityViewController,
-						_cardsViewController,
-						_userViewController
-					};
 					InvokeOnMainThread(()=>{
+						var tabBarController = new UITabBarController();
+						//tabBarController.Delegate = new ProdeTabBarDelegate(this);
+						tabBarController.ViewControllers = new UIViewController [] {
+							_communityViewController,
+							_cardsViewController,
+							_userViewController
+						};
 						_RemoveAllSubviews();
 						window.RootViewController = tabBarController;
 					});
@@ -118,8 +118,8 @@ namespace prode
 
 				case AppMode.Newbie:
 					Console.WriteLine("Launching newbie mode...");
-					_tutorialViewController.View.Frame = new System.Drawing.RectangleF(0,20,320,460);
 					InvokeOnMainThread(()=>{
+						_tutorialViewController.View.Frame = new System.Drawing.RectangleF(0,20,320,460);
 						_RemoveAllSubviews();
 						window.AddSubview(_tutorialViewController.View);
 					});
