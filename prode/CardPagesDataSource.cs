@@ -34,11 +34,13 @@ namespace prode
 			
 			var matchDetailView = new MatchDetailView();
 			int verticalOffset = 68;
-			
+			int offset = (card.Matches.Count <= 10) ? 28 : 26;
+
 			if (card.IsEditable()) {
-				foreach (var match in card.Matches) {
+				var sorted_matches = card.Matches.OrderBy(m => m.MatchId);
+				foreach (var match in sorted_matches) {
 					var matches = matchDetailView.BuildForEdit(match, verticalOffset);
-					verticalOffset += 28;
+					verticalOffset += offset;
 					
 					_scrollView.AddSubviews(matches);
 				}			
