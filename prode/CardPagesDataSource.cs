@@ -67,7 +67,7 @@ namespace prode
 			else if (card.IsPublished()) {
 				foreach (var match in card.Matches) {
 					var matches = matchDetailView.BuildForPublished(match, verticalOffset);
-					verticalOffset += 28;
+					verticalOffset += offset;
 					_scrollView.AddSubviews(matches);
 				}			
 
@@ -84,7 +84,7 @@ namespace prode
 			else {
 				foreach (var match in card.Matches) {
 					var matches = matchDetailView.BuildForReadOnly(match, verticalOffset);
-					verticalOffset += 28;
+					verticalOffset += offset;
 					_scrollView.AddSubviews(matches);
 				}			
 
