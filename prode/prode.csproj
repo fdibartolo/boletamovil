@@ -61,6 +61,7 @@
     <CodesignProvision>ED24927F-085C-4FA5-861D-134575F50C6E</CodesignProvision>
     <IpaPackageName />
     <MtouchI18n />
+    <MtouchArch>ARMv7</MtouchArch>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Ad-Hoc|iPhone' ">
     <DebugType>none</DebugType>
@@ -146,7 +147,6 @@
     <Content Include="Icons\Logo512x512.png" />
     <Content Include="Images\Arrow.png" />
     <Content Include="Icons\Logo72x72.png" />
-    <Content Include="Default-568h%402x.png" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -161,5 +161,9 @@
   </ItemGroup>
   <ItemGroup>
     <ITunesArtwork Include="iTunesArtwork" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Default-568h%402x.png" />
+    <BundleResource Include="Resources\Default-568h%402x.png" />
   </ItemGroup>
 </Project>
