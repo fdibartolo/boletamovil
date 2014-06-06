@@ -36,6 +36,7 @@
     <MtouchLink>None</MtouchLink>
     <MtouchI18n>
     </MtouchI18n>
+    <MtouchArch>ARMv7</MtouchArch>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
     <DebugSymbols>True</DebugSymbols>
@@ -87,12 +88,14 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>False</ConsolePause>
-    <CodesignKey>iPhone Distribution: Fernando Di Bartolo</CodesignKey>
+    <CodesignKey>iPhone Distribution: Fernando Di Bartolo (6M9EVFE2X4)</CodesignKey>
     <MtouchExtraArgs>--armv7</MtouchExtraArgs>
     <MtouchI18n>
     </MtouchI18n>
     <IpaPackageName>
     </IpaPackageName>
+    <CodesignProvision>05D6D3C3-17B2-4AE6-A2FB-A9A51B9B446B</CodesignProvision>
+    <MtouchArch>ARMv7</MtouchArch>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -173,9 +176,12 @@
   </ItemGroup>
   <ItemGroup>
     <ITunesArtwork Include="iTunesArtwork" />
+    <ITunesArtwork Include="iTunesArtwork%402x" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\Default-568h%402x.png" />
     <BundleResource Include="Default-568h%402x.png" />
+    <BundleResource Include="Resources\Icon-60%402x.png" />
+    <BundleResource Include="Resources\Icon-Small-40%402x.png" />
   </ItemGroup>
 </Project>
