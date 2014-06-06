@@ -26,9 +26,7 @@ namespace prode
 			viewController.View.BackgroundColor = ScreenResolutionMatcher.BackgroundColorFromImage();
 
 			_scrollView = new UIScrollView() {
-//				Frame = new RectangleF(0,0,320,480),
 				Frame = ScreenResolutionMatcher.FullViewFrame(),
-//				ContentSize = new SizeF(320, 480),
 				ContentSize = ScreenResolutionMatcher.ViewFrame(),
                 ScrollEnabled = true
 			};
@@ -135,7 +133,7 @@ namespace prode
 	    }
 
 		private Card StripOverdueMatches(Card card) {
-			card.Matches.RemoveAll(m => !m.IsEditable()); // = card.Matches.Where(m => m.IsEditable());
+			card.Matches.RemoveAll(m => !m.IsEditable());
 			return card;
 		}
 

@@ -51,11 +51,6 @@ namespace prode
 		
 		public override void ViewWillAppear (bool animated) {
 			base.ViewWillAppear (animated);
-
-//			View.BackgroundColor = UIColor.Green;
-//			ExtendedLayoutIncludesOpaqueBars = false;
-//			EdgesForExtendedLayout = UIRectEdge.All;
-
 			View.AddSubview(_pagedViewController.View);
 			ReloadPages();
 		}
@@ -80,6 +75,10 @@ namespace prode
 		
 		public void ReloadPages() {
 			_pagedViewController.ReloadPages();	
+		}
+
+		public override UIStatusBarStyle PreferredStatusBarStyle() {
+			return UIStatusBarStyle.LightContent;
 		}
 	}
 }

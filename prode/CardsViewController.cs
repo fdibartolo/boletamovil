@@ -77,6 +77,10 @@ namespace prode
 			//return (toInterfaceOrientation != UIInterfaceOrientation.PortraitUpsideDown);
 			return false;
 		}
+
+		public override UIStatusBarStyle PreferredStatusBarStyle() {
+			return UIStatusBarStyle.LightContent;
+		}
 	}
 }
 
