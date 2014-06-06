@@ -14,7 +14,8 @@ namespace prode
  
 		readonly UIPageControl _pageControl = new UIPageControl {
 			Pages = 0,
-            Frame = new RectangleF(0, 396, 320, 14)
+			//Frame = new RectangleF(0, 396, 320, 14)
+			Frame = ScreenResolutionMatcher.PaginationControlFrame()
         };
            
 		public PagedViewController() {
@@ -67,7 +68,7 @@ namespace prode
 					_pages.Add(pageViewController);
 				}
                  
-				_scrollView.ContentSize = new SizeF(320*(i==0?1:i), 400);
+				_scrollView.ContentSize = new SizeF(320*(i==0?1:i), ScreenResolutionMatcher.PaginationControlContentHeight());
 				_pageControl.Pages = i;
 				_pageControl.CurrentPage = 0;
 				_pages[0].ViewDidAppear(true);
@@ -76,7 +77,8 @@ namespace prode
 			}
            
 		public override void ViewDidLoad () {
-			View.Frame = new RectangleF(0, 20, 320, 480);
+//			View.Frame = new RectangleF(0, 20, 320, 480);
+			View.Frame = ScreenResolutionMatcher.FullViewFrame();
 			View.BackgroundColor = UIColor.Black;
 			View.AddSubview(_scrollView);
 			View.AddSubview(_pageControl);
@@ -91,9 +93,10 @@ namespace prode
 				ShowsHorizontalScrollIndicator = false;
 				ShowsVerticalScrollIndicator = false;
 				Bounces = true;
-				ContentSize = new SizeF(320, 400);
+				ContentSize = new SizeF(320, ScreenResolutionMatcher.PaginationControlContentHeight());
 				PagingEnabled = true;
-				Frame = new RectangleF(0, 0, 320, 426);
+//				Frame = new RectangleF(0, 0, 320, 426);
+				Frame = ScreenResolutionMatcher.PagedScrollViewFrame();
 			}
 		}
 	}

@@ -36,7 +36,7 @@ namespace prode
 			_InitializeControllers();
 			
 			window = new UIWindow (UIScreen.MainScreen.Bounds);
-			window.AddSubview(new UIImageView(UIImage.FromFile("Default.png")));
+			window.AddSubview(ScreenResolutionMatcher.BackgroundImage());
 
 			AppManager.Current.StartUp();
 			window.MakeKeyAndVisible ();
@@ -91,7 +91,7 @@ namespace prode
 				case AppMode.Login:
 					Console.WriteLine("Launching login mode...");
 					InvokeOnMainThread(()=>{
-						_loginViewController.View.Frame = new System.Drawing.RectangleF(0,20,320,460);
+					_loginViewController.View.Frame = ScreenResolutionMatcher.FullViewFrame();
 						_RemoveAllSubviews();
 						window.AddSubview(_loginViewController.View);
 					});
@@ -105,6 +105,10 @@ namespace prode
 
 					InvokeOnMainThread(()=>{
 						var tabBarController = new UITabBarController();
+						if (ScreenResolutionMatcher.IsiOS7()) {
+							tabBarController.TabBar.BarTintColor = UIColor.Black;
+							tabBarController.TabBar.TintColor = UIColor.White;
+						}
 						//tabBarController.Delegate = new ProdeTabBarDelegate(this);
 						tabBarController.ViewControllers = new UIViewController [] {
 							_communityViewController,
@@ -119,7 +123,7 @@ namespace prode
 				case AppMode.Newbie:
 					Console.WriteLine("Launching newbie mode...");
 					InvokeOnMainThread(()=>{
-						_tutorialViewController.View.Frame = new System.Drawing.RectangleF(0,20,320,460);
+						_tutorialViewController.View.Frame = ScreenResolutionMatcher.FullViewFrame();
 						_RemoveAllSubviews();
 						window.AddSubview(_tutorialViewController.View);
 					});

@@ -19,7 +19,7 @@ namespace prode
 		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
-			View.BackgroundColor = UIColor.FromPatternImage(UIImage.FromFile("Default.png"));
+			View.BackgroundColor = ScreenResolutionMatcher.BackgroundColorFromImage();
 						
 			View.AddSubviews(
 				new UILabel{

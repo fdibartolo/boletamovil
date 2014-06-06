@@ -28,11 +28,11 @@ namespace prode
 		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
-			View.BackgroundColor = UIColor.FromPatternImage(UIImage.FromFile("Default.png"));
+			View.BackgroundColor = ScreenResolutionMatcher.BackgroundColorFromImage();
 
 			_nameLabel = new UILabel{
 				TextAlignment = UITextAlignment.Right,
-				Frame = new RectangleF(10,20,300,40),
+				Frame = new RectangleF(10,40,300,40),
 				TextColor = UIColor.White,
 				Font = UIFont.BoldSystemFontOfSize(24),
 				BackgroundColor = UIColor.Clear
@@ -41,14 +41,14 @@ namespace prode
 
 			_nicknameLabel = new UILabel{
 				TextAlignment = UITextAlignment.Right,
-				Frame = new RectangleF(10,50,300,20),
+				Frame = new RectangleF(10,90,300,20),
 				TextColor = UIColor.White,
 				Font = UIFont.BoldSystemFontOfSize(14),
 				BackgroundColor = UIColor.Clear
 			};
 			View.AddSubview(_nicknameLabel);
 
-			var logoutButton = new GlassButton(new RectangleF (10, 360, 300, 40)) {
+			var logoutButton = new GlassButton(new RectangleF (10, ScreenResolutionMatcher.PushedToBottomButtonY(), 300, 40)) {
      			NormalColor = UIColor.FromRGBA(222/255f, 222/255f, 225/255f, 0.25f),
      			HighlightedColor = UIColor.Black
  			};

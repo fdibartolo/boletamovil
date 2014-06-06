@@ -23,17 +23,19 @@ namespace prode
 			var card = _GetOrderedCardByIndex(i);
 
 	        UIViewController viewController = new ScrollableViewController();
-			viewController.View.BackgroundColor = UIColor.FromPatternImage(UIImage.FromFile("Default.png"));
+			viewController.View.BackgroundColor = ScreenResolutionMatcher.BackgroundColorFromImage();
 
 			_scrollView = new UIScrollView() {
-				Frame = new RectangleF(0,0,320,480),
-				ContentSize = new SizeF(320, 480),
+//				Frame = new RectangleF(0,0,320,480),
+				Frame = ScreenResolutionMatcher.FullViewFrame(),
+//				ContentSize = new SizeF(320, 480),
+				ContentSize = ScreenResolutionMatcher.ViewFrame(),
                 ScrollEnabled = true
 			};
 	        _scrollView.AddSubview(new CardView(card));
 			
 			var matchDetailView = new MatchDetailView();
-			int verticalOffset = 68;
+			int verticalOffset = 68 + ScreenResolutionMatcher.ContentViewStartingY();
 			int offset = (card.Matches.Count <= 10) ? 28 : 26;
 
 			if (card.IsEditable()) {
@@ -56,7 +58,7 @@ namespace prode
 					_scrollView.AddSubviews(matches);
 				}			
 				
-				var submitCardButton = new GlassButton(new RectangleF (10, 354, 300, 40)) {
+				var submitCardButton = new GlassButton(new RectangleF (10, ScreenResolutionMatcher.PushedToBottomButtonY(), 300, 40)) {
 	     			NormalColor = UIColor.FromRGBA(222/255f, 222/255f, 225/255f, 0.25f),
 	     			HighlightedColor = UIColor.Black
 	 			};
@@ -88,7 +90,7 @@ namespace prode
 					new UILabel{
 						Text = string.Format("Fecha cerrada. Obtuviste {0} puntos!", card.Points),
 						TextAlignment = UITextAlignment.Center,
-						Frame = new RectangleF(10,354,300,40),
+						Frame = new RectangleF(10,ScreenResolutionMatcher.PushedToBottomButtonY(),300,40),
 						TextColor = UIColor.White,
 						Font = UIFont.BoldSystemFontOfSize(17),
 						BackgroundColor = UIColor.Clear
@@ -105,7 +107,7 @@ namespace prode
 					new UILabel{
 						Text = "Fecha cerrada. Pronto sabrás tus puntos!",
 						TextAlignment = UITextAlignment.Center,
-						Frame = new RectangleF(10,354,300,40),
+						Frame = new RectangleF(10,ScreenResolutionMatcher.PushedToBottomButtonY(),300,40),
 						TextColor = UIColor.White,
 						Font = UIFont.BoldSystemFontOfSize(15),
 						BackgroundColor = UIColor.Clear
@@ -117,7 +119,7 @@ namespace prode
 					new UILabel{
 					Text = string.Format("Total tarjeta Brasil 2014: {0} puntos!", card.Points),
 					TextAlignment = UITextAlignment.Center,
-					Frame = new RectangleF(10,314,300,40),
+					Frame = new RectangleF(10,ScreenResolutionMatcher.PushedToBottomButtonY()-40,300,40),
 					TextColor = UIColor.White,
 					Font = UIFont.BoldSystemFontOfSize(17),
 					BackgroundColor = UIColor.Clear

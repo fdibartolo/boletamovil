@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">iPhoneSimulator</Platform>
-    <ProductVersion>10.0.0</ProductVersion>
+    <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{9DCC462E-78EC-4355-B5FC-C1A40C5D90E1}</ProjectGuid>
     <ProjectTypeGuids>{6BC8ED88-2882-458C-8E55-DFD12B67127B};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -22,7 +22,8 @@
     <ConsolePause>False</ConsolePause>
     <MtouchDebug>True</MtouchDebug>
     <MtouchLink>None</MtouchLink>
-    <MtouchI18n />
+    <MtouchI18n>
+    </MtouchI18n>
     <MtouchArch>ARMv7</MtouchArch>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
@@ -33,7 +34,8 @@
     <WarningLevel>4</WarningLevel>
     <ConsolePause>False</ConsolePause>
     <MtouchLink>None</MtouchLink>
-    <MtouchI18n />
+    <MtouchI18n>
+    </MtouchI18n>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
     <DebugSymbols>True</DebugSymbols>
@@ -47,8 +49,10 @@
     <CodesignKey>iPhone Developer</CodesignKey>
     <MtouchDebug>True</MtouchDebug>
     <MtouchProfiling>True</MtouchProfiling>
-    <IpaPackageName />
-    <CrashReportingApiKey />
+    <IpaPackageName>
+    </IpaPackageName>
+    <CrashReportingApiKey>
+    </CrashReportingApiKey>
     <CodesignProvision>1016A318-0B31-4A65-8D4E-CAC676EC6FC5</CodesignProvision>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
@@ -60,8 +64,10 @@
     <ConsolePause>False</ConsolePause>
     <CodesignKey>iPhone Developer</CodesignKey>
     <CodesignProvision>ED24927F-085C-4FA5-861D-134575F50C6E</CodesignProvision>
-    <IpaPackageName />
-    <MtouchI18n />
+    <IpaPackageName>
+    </IpaPackageName>
+    <MtouchI18n>
+    </MtouchI18n>
     <MtouchArch>ARMv7</MtouchArch>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Ad-Hoc|iPhone' ">
@@ -83,8 +89,10 @@
     <ConsolePause>False</ConsolePause>
     <CodesignKey>iPhone Distribution: Fernando Di Bartolo</CodesignKey>
     <MtouchExtraArgs>--armv7</MtouchExtraArgs>
-    <MtouchI18n />
-    <IpaPackageName />
+    <MtouchI18n>
+    </MtouchI18n>
+    <IpaPackageName>
+    </IpaPackageName>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -127,6 +135,7 @@
     <Compile Include="Util\FrameView.cs" />
     <Compile Include="ScrollableViewController.cs" />
     <Compile Include="Util\ViewExtensions.cs" />
+    <Compile Include="Util\ScreenResolutionMatcher.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="LoginViewController.xib" />
@@ -148,6 +157,8 @@
     <Content Include="Icons\Logo512x512.png" />
     <Content Include="Images\Arrow.png" />
     <Content Include="Icons\Logo72x72.png" />
+    <Content Include="DefaultTall.png" />
+    <Content Include="DefaultTall%402x.png" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -164,7 +175,7 @@
     <ITunesArtwork Include="iTunesArtwork" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Default-568h%402x.png" />
     <BundleResource Include="Resources\Default-568h%402x.png" />
+    <BundleResource Include="Default-568h%402x.png" />
   </ItemGroup>
 </Project>

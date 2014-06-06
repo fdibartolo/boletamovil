@@ -67,7 +67,7 @@ namespace prode {
 			}
 		}
 		
-		public LoadingHUDView():this("Conectando", "Espere un momento por favor..."){}
+		public LoadingHUDView():this("Conectando", "Un momento por favor..."){}
 	
 		public LoadingHUDView(string title, string message) {
 			Title = title;
@@ -75,7 +75,7 @@ namespace prode {
 			_activity = new UIActivityIndicatorView(UIActivityIndicatorViewStyle.White);
 			_hidden = true;
 			this.BackgroundColor = UIColor.Clear;
-			Frame = new RectangleF(0,0,320,480);
+			Frame = ScreenResolutionMatcher.FullViewFrame();
 			this.AddSubview(_activity);
 			BackgroundColor = UIColor.FromWhiteAlpha(1f, 0.5f);
 			
@@ -175,9 +175,6 @@ namespace prode {
 				this.RemoveFromSuperview();
 			});
 		}
-		
-	
-		
 	}
 	
 	public static class UIViewExtensions {

@@ -17,7 +17,8 @@ namespace prode
 	
 	    public UIViewController GetPage(int i){
 	        UIViewController viewController = new UIViewController();
-			viewController.View.BackgroundColor = UIColor.FromPatternImage(UIImage.FromFile("Default.png"));
+			viewController.View.BackgroundColor = ScreenResolutionMatcher.BackgroundColorFromImage();
+
 			viewController.View.AddSubview(new RankingView(_stats[i]));
 
 //			viewController.View.AddSubview(new UIImageView() {

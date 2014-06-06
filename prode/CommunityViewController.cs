@@ -15,7 +15,6 @@ namespace prode
 		{
 			Title = NSBundle.MainBundle.LocalizedString ("Comunidad", "Comunidad");
 			TabBarItem.Image = UIImage.FromFile("Images/Community.png");
-			
 			RefreshRequested += _HandleRefreshRequested;
 		}
 
@@ -52,6 +51,11 @@ namespace prode
 		
 		public override void ViewWillAppear (bool animated) {
 			base.ViewWillAppear (animated);
+
+//			View.BackgroundColor = UIColor.Green;
+//			ExtendedLayoutIncludesOpaqueBars = false;
+//			EdgesForExtendedLayout = UIRectEdge.All;
+
 			View.AddSubview(_pagedViewController.View);
 			ReloadPages();
 		}
