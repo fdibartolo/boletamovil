@@ -2,6 +2,7 @@
 /**/bin/**/**/*.*
 /**/obj/**/
 prode.domain/bin/**/*.*
+prode/bin/
 
 *.userprefs
 *.pidb

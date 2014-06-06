@@ -39,7 +39,18 @@ namespace prode
 			if (card.IsEditable()) {
 				var sorted_matches = card.Matches.OrderBy(m => m.MatchId);
 				foreach (var match in sorted_matches) {
-					var matches = matchDetailView.BuildForEdit(match, verticalOffset);
+					UIView[] matches;
+					if (card.IsKnockout) {
+						if (match.IsEditable ())
+							matches = matchDetailView.BuildForEdit (match, verticalOffset);
+						else if (match.HasRealScore())
+							matches = matchDetailView.BuildForPublished(match, verticalOffset);
+						else
+							matches = matchDetailView.BuildForReadOnly(match, verticalOffset);
+					}
+					else
+						matches = matchDetailView.BuildForEdit(match, verticalOffset);
+
 					verticalOffset += offset;
 					
 					_scrollView.AddSubviews(matches);
@@ -57,8 +68,10 @@ namespace prode
 						firstResponder.ResignFirstResponder();
 
 					//app could have been open for a while, and card might no longer be editable
-					if (card.IsEditable())
+					if (card.IsEditable()) {
+						if (card.IsKnockout) { card = StripOverdueMatches(card); }
 						AppManager.Current.CardsService.SubmitCard(card);
+					} 
 					else 
 						new UIAlertView(Constants.APP_TITLE, "La fecha ya ha cerrado.", null, "Ok").Show();
 				};
@@ -99,6 +112,18 @@ namespace prode
 				});
 			}
 
+			if (card.IsKnockout) {
+				_scrollView.AddSubview(
+					new UILabel{
+					Text = string.Format("Total tarjeta Brasil 2014: {0} puntos!", card.Points),
+					TextAlignment = UITextAlignment.Center,
+					Frame = new RectangleF(10,314,300,40),
+					TextColor = UIColor.White,
+					Font = UIFont.BoldSystemFontOfSize(17),
+					BackgroundColor = UIColor.Clear
+				});
+			}
+
 			viewController.View.AddSubview(_scrollView);
 //			viewController.View.AddSubview(new UIImageView() {
 //				Frame = new RectangleF(5,0,16,30),
@@ -106,6 +131,11 @@ namespace prode
 //			});
 	        return viewController;
 	    }
+
+		private Card StripOverdueMatches(Card card) {
+			card.Matches.RemoveAll(m => !m.IsEditable()); // = card.Matches.Where(m => m.IsEditable());
+			return card;
+		}
 
     	public void Reload(){
 			_cards = AppManager.Current.Repository.Cards;

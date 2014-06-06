@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
@@ -11,6 +12,7 @@ namespace prode.domain
 		public string TournamentName { get; set; }
 		public string WeekDueDate { get; set; }
 		public string WeekPublishDate { get; set; }
+		public bool IsKnockout { get; set; }
 		public int Points { get; set; }
 		public List<Match> Matches { get; set; }
 		
@@ -21,11 +23,13 @@ namespace prode.domain
 				{"tournament_name","TournamentName"},	
 				{"due_date","WeekDueDate"},	
 				{"publish_date","WeekPublishDate"},	
+				{"is_knockout","IsKnockout"},	
 				{"points","Points"},	
 				{"matches","Matches"},
 				{"match_id","MatchId"},
 				{"home_team","HomeTeam"},
 				{"guest_team","GuestTeam"},
+				{"group_key","GroupKey"},
 				{"home_real_score","HomeRealScore"},
 				{"guest_real_score","GuestRealScore"},
 				{"home_user_score","HomeUserScore"},
@@ -33,9 +37,36 @@ namespace prode.domain
 			};
 			
 			var convertedJsonString = JsonHelper.ConvertJsonKeysToProperties(keyProp, jsonString);
-			var cards = JsonConvert.DeserializeObject<List<Card>>(convertedJsonString);
+			var cards = JsonConvert.DeserializeObject<List<Card>>(convertedJsonString) as List<Card>;
+			var sanitizedCards = SplitKnockoutGroupsIntoSingleCards(cards);
+			return sanitizedCards;
+		}
 
-			return cards as List<Card>;
+		private static List<Card> SplitKnockoutGroupsIntoSingleCards(List<Card> cards){
+			List<Card> result = new List<Card>();
+			result.AddRange(cards.Where(c => !c.IsKnockout));
+
+			var card = cards.Where(c => c.IsKnockout).First();
+
+			var currentGroup = "_GROUP_";
+			foreach (var match in card.Matches.OrderBy(m => m.MatchId)) {
+				if (match.GroupKey != currentGroup) {
+					result.Add(new Card {
+						WeekId = card.WeekId,
+						TournamentName = card.TournamentName,
+						WeekDueDate = card.WeekDueDate,
+						WeekPublishDate = card.WeekPublishDate,
+						IsKnockout = card.IsKnockout,
+						Points = card.Points,
+
+						WeekName = match.GroupKey,
+						Matches = card.Matches.Where(m => m.GroupKey.Equals(match.GroupKey)).ToList()
+					});
+					currentGroup = match.GroupKey;
+				}
+			}
+
+			return result;
 		}
 
 		public bool IsEditable() {
