@@ -46,23 +46,25 @@ namespace prode.domain
 			List<Card> result = new List<Card>();
 			result.AddRange(cards.Where(c => !c.IsKnockout));
 
-			var card = cards.Where(c => c.IsKnockout).First();
+			var knockoutCards = cards.Where(c => c.IsKnockout).ToList();
+			if (knockoutCards.Count > 0) {
+				var card = knockoutCards.First ();
+				var currentGroup = "_GROUP_";
+				foreach (var match in card.Matches.OrderBy(m => m.MatchId)) {
+					if (match.GroupKey != currentGroup) {
+						result.Add (new Card {
+							WeekId = card.WeekId,
+							TournamentName = card.TournamentName,
+							WeekDueDate = card.WeekDueDate,
+							WeekPublishDate = card.WeekPublishDate,
+							IsKnockout = card.IsKnockout,
+							Points = card.Points,
 
-			var currentGroup = "_GROUP_";
-			foreach (var match in card.Matches.OrderBy(m => m.MatchId)) {
-				if (match.GroupKey != currentGroup) {
-					result.Add(new Card {
-						WeekId = card.WeekId,
-						TournamentName = card.TournamentName,
-						WeekDueDate = card.WeekDueDate,
-						WeekPublishDate = card.WeekPublishDate,
-						IsKnockout = card.IsKnockout,
-						Points = card.Points,
-
-						WeekName = match.GroupKey,
-						Matches = card.Matches.Where(m => m.GroupKey.Equals(match.GroupKey)).ToList()
-					});
-					currentGroup = match.GroupKey;
+							WeekName = match.GroupKey,
+							Matches = card.Matches.Where(m => m.GroupKey.Equals(match.GroupKey)).ToList()
+						});
+						currentGroup = match.GroupKey;
+					}
 				}
 			}
 
